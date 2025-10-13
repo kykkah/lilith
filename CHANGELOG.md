@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [8.5.0][unreleased] - TBD
+
+## [8.5.0] - 2025-10-13
+
+### Changed
+- Demand Java 11
+- Discarded JUnique project from the codebase and commented its references in the Lilith project
+- Upgraded to Gradle 7.6 in both, Sulky and Lilith. It is verified with Java 11. This upgrade required re-hauling the gradle files in Lilith. The re-hauling steps are documented under the /lilith/src/main/resources/upgrade-gradle-6-to-7-docs folder
+
 ## [8.4.0][unreleased] - TBD
 
 ### Fixed

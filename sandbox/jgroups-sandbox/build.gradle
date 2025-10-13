@@ -4,10 +4,12 @@ apply from: '../sandboxDefaults.gradle'
 apply plugin: 'application'
 apply plugin: 'idea'
 
-mainClassName = 'de.huxhorn.lilith.sandbox.JGroupsSandbox'
+application {
+	mainClass = 'de.huxhorn.lilith.sandbox.JGroupsSandbox'
+}
 
 dependencies {
-	compile libraries.'slf4j-api'
-	runtime libraries.'logback-classic'
-	compile 'org.jgroups:jgroups:3.6.6.Final'
+	implementation libraries.'slf4j-api'
+	runtimeOnly libraries.'logback-classic'
+	implementation 'org.jgroups:jgroups:3.6.6.Final'
 }

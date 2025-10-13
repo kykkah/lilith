@@ -1,48 +1,40 @@
-include 'lilith'
-include 'lilith-conditions'
-include 'lilith-constants'
-include 'lilith-engine'
-include 'lilith-json-logging'
-include 'lilith-prefs'
-include 'lilith-sender'
-include 'lilith-sounds'
-include 'lilith-xml-logging'
-include 'slf4j'
-include 'tracing'
-
-def ignores = new HashSet<String>()
-ignores.add('xml-schema')
-ignores.add('target')
-
-new File(rootDir, "lilith-data").eachDir { dir ->
-	if(!ignores.contains(dir.name)) {
-		def moduleName = "${dir.parentFile.name}-${dir.name}"
-		include "${moduleName}"
-		project(":${moduleName}").projectDir = dir
+// Plugin resolution must be first
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 
-new File(rootDir, 'jul').eachDir { dir ->
-	if(!ignores.contains(dir.name)) {
-		def moduleName = "${dir.name}"
-		include "${moduleName}"
-		project(":${moduleName}").projectDir = dir
-	}
+// Lilith multi-module settings
+rootProject.name = 'lilith'
+
+// Explicit top-level modules
+def topLevelModules = [
+        'lilith',
+        'lilith-conditions',
+        'lilith-constants',
+        'lilith-engine',
+        'lilith-idea-plugin',
+        'lilith-json-logging',
+        'lilith-prefs',
+        'lilith-sender',
+        'lilith-sounds',
+        'lilith-xml-logging'
+]
+topLevelModules.each { m -> if (file(m).isDirectory()) include(":${m}") }
+
+// Grouped module directories to scan
+['lilith-data', 'jul', 'log4j', 'logback'].each { parent ->
+    def parentDir = file(parent)
+    if (parentDir.isDirectory()) {
+        parentDir.eachDir { d ->
+            include(":${parent}:${d.name}")
+        }
+    }
 }
 
-new File(rootDir, 'log4j').eachDir { dir ->
-	if(!ignores.contains(dir.name)) {
-		def moduleName = "${dir.name}"
-		include "${moduleName}"
-		project(":${moduleName}").projectDir = dir
-	}
+// Optional third-party module(s)
+if (file('3rdparty/junique').isDirectory()) {
+    include(':3rdparty:junique')
 }
-
-new File(rootDir, "logback").eachDir { dir ->
-	if(!ignores.contains(dir.name)) {
-		def moduleName = "${dir.parentFile.name}-${dir.name}"
-		include "${moduleName}"
-		project(":${moduleName}").projectDir = dir
-	}
-}
-

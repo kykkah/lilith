@@ -4,14 +4,15 @@ apply from: '../sandboxDefaults.gradle'
 apply plugin: 'application'
 apply plugin: 'idea'
 
-mainClassName = 'de.huxhorn.lilith.sandbox.LogbackClassicSandbox'
+application {
+	mainClass = 'de.huxhorn.lilith.sandbox.LogbackClassicSandbox'
+}
 
 dependencies {
-	compile libraries.'logback-classic'
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
+	implementation libraries.'logback-classic'
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
 	//compile 'ch.qos.logback:logback-classic:1.2.1'
 	//runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:8.1.0"
 	//runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:8.1.0"
 }
-

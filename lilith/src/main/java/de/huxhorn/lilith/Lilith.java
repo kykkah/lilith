@@ -50,8 +50,8 @@ import de.huxhorn.lilith.tools.TailCommand;
 import de.huxhorn.sulky.formatting.SafeString;
 import de.huxhorn.sulky.sounds.jlayer.JLayerSounds;
 import de.huxhorn.sulky.swing.Windows;
-import it.sauronsoftware.junique.AlreadyLockedException;
-import it.sauronsoftware.junique.JUnique;
+// import it.sauronsoftware.junique.AlreadyLockedException;
+// import it.sauronsoftware.junique.JUnique;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
@@ -138,9 +138,9 @@ public class Lilith
 
 	private static final String SNAPSHOT_POSTFIX = "-SNAPSHOT";
 
-	private static final String JUNIQUE_MSG_SHOW = "Show";
-	private static final String JUNIQUE_REPLY_OK = "OK";
-	private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
+	// private static final String JUNIQUE_MSG_SHOW = "Show";
+	// private static final String JUNIQUE_REPLY_OK = "OK";
+	// private static final String JUNIQUE_REPLY_UNKNOWN = "Unknown";
 
 	private static final String APPLE_SCREEN_MENU_BAR_SYSTEM_PROPERTY = "apple.laf.useScreenMenuBar";
 	private static final String GROOVY_EXTENSION = ".groovy";
@@ -153,6 +153,7 @@ public class Lilith
 			};
 
 	private static Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+	@SuppressWarnings("PMD.UnusedPrivateField")
 	private static MainFrame mainFrame;
 
 	static {
@@ -543,26 +544,24 @@ public class Lilith
 		ImportExportCommand.exportPreferences(new File(file));
 	}
 
-	private static void startLilith(String appTitle)
-	{
-		final Logger logger = LoggerFactory.getLogger(Lilith.class);
-
-		uncaughtExceptionHandler = new UncaughtExceptionHandler();
+    private static void startLilith(String appTitle)
+    {
+        uncaughtExceptionHandler = new UncaughtExceptionHandler();
 
 		Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
 
 		// preventing duplicate instances...
-		try
-		{
-			JUnique.acquireLock(Lilith.class.getName(), Lilith::handleJUniqueMessage);
-		}
-		catch(AlreadyLockedException e)
-		{
-			if(logger.isInfoEnabled()) logger.info("Detected running instance, quitting.");
-			String result=JUnique.sendMessage(Lilith.class.getName(),"Show");
-			if(logger.isDebugEnabled()) logger.debug("JUnique result: {}", result);
-			return;
-		}
+		// try
+		// {
+		// 	JUnique.acquireLock(Lilith.class.getName(), Lilith::handleJUniqueMessage);
+		// }
+		// catch(AlreadyLockedException e)
+		// {
+		// 	if(logger.isInfoEnabled()) logger.info("Detected running instance, quitting.");
+		// 	String result=JUnique.sendMessage(Lilith.class.getName(),"Show");
+		// 	if(logger.isDebugEnabled()) logger.debug("JUnique result: {}", result);
+		// 	return;
+		// }
 		// ok, we are the first instance this user has started...
 
 		// install uncaught exception handler on event thread.
@@ -712,32 +711,30 @@ public class Lilith
 		System.exit(0);
 	}
 
-	private static String handleJUniqueMessage(String msg)
-	{
-		if(JUNIQUE_MSG_SHOW.equals(msg))
-		{
-			showMainFrame();
-			return JUNIQUE_REPLY_OK;
-		}
-		return JUNIQUE_REPLY_UNKNOWN;
-	}
+	// @SuppressWarnings("PMD.UnusedPrivateMethod")
+	// private static String handleJUniqueMessage(String msg){
+	// 	if(JUNIQUE_MSG_SHOW.equals(msg)){
+	// 		showMainFrame();
+	// 		return JUNIQUE_REPLY_OK;
+	// 	}
+	// 	return JUNIQUE_REPLY_UNKNOWN;
+	// }
 
-	private static void showMainFrame()
-	{
-		if(mainFrame != null)
-		{
-			final MainFrame frame = mainFrame;
-			EventQueue.invokeLater(() -> {
-
-				if (frame.isVisible())
-				{
-					frame.setVisible(false);
-				}
-				Windows.showWindow(frame, null, false);
-				frame.toFront();
-			});
-		}
-	}
+	// private static void showMainFrame()
+	// {
+	// 	if(mainFrame != null)
+	// 	{
+	// 		final MainFrame frame = mainFrame;
+	// 		EventQueue.invokeLater(() -> {
+	// 			if (frame.isVisible())
+	// 			{
+	// 				frame.setVisible(false);
+	// 			}
+	// 			Windows.showWindow(frame, null, false);
+	// 			frame.toFront();
+	// 		});
+	// 	}
+	// }
 
 	private static void updateSplashStatus(final SplashScreen splashScreen, final String status)
 	{

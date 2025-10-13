@@ -5,7 +5,10 @@ apply plugin: 'application'
 apply plugin: 'idea'
 
 archivesBaseName = 'log4j2-sandbox'
-mainClassName = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'
+
+application {
+	mainClass = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'
+}
 
 def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
@@ -21,10 +24,9 @@ sourceCompatibility = globalSourceCompatibility
 targetCompatibility = globalTargetCompatibility
 
 dependencies {
-	compile libraries.'log4j2-api'
-	runtime libraries.'log4j2-core'
-	runtime libraries.'jackson-databind'
-	runtime libraries.'jackson-dataformat-xml'
-	runtime libraries.'jackson-dataformat-yaml'
+	implementation libraries.'log4j2-api'
+	runtimeOnly libraries.'log4j2-core'
+	runtimeOnly libraries.'jackson-databind'
+	runtimeOnly libraries.'jackson-dataformat-xml'
+	runtimeOnly libraries.'jackson-dataformat-yaml'
 }
-

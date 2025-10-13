@@ -103,14 +103,14 @@ apply plugin: 'org.springframework.boot'
 version = '1.0.0-SNAPSHOT'
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-access:${lilithVersion}"
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.access:${lilithVersion}"
-	runtime "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
-	runtime libraries.'spring-boot-ext-logback-access'
-	compile libraries.'logback-access'
-	compile libraries.'logback-core'
-	compile libraries.'logback-classic'
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-access:${lilithVersion}"
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.access:${lilithVersion}"
+	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.classic:${lilithVersion}"
+	runtimeOnly libraries.'spring-boot-ext-logback-access'
+	implementation libraries.'logback-access'
+	implementation libraries.'logback-core'
+	implementation libraries.'logback-classic'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
