@@ -311,7 +311,11 @@ project(':lilith-conditions') {
             implementation project(':lilith-data:access')
             implementation project(':lilith-data:eventsource')
             testImplementation project(':lilith-data:corpus')
+            testImplementation libraries.'junit-jupiter-api'
+            testImplementation libraries.'junit-jupiter-params'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
     }
 }
 

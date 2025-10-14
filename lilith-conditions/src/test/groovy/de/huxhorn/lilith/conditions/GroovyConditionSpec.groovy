@@ -18,8 +18,6 @@
 package de.huxhorn.lilith.conditions
 
 import de.huxhorn.sulky.junit.JUnitTools
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -28,13 +26,16 @@ import static de.huxhorn.sulky.junit.JUnitTools.testSerialization
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization
 
 class GroovyConditionSpec extends Specification {
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder()
-
 	public File rootDirectory
 
 	def setup() {
-		rootDirectory = folder.newFolder()
+		rootDirectory = File.createTempDir('GroovyConditionSpec', '')
+	}
+
+	def cleanup() {
+		if(rootDirectory?.exists()) {
+			rootDirectory.deleteDir()
+		}
 	}
 
 	@Unroll
