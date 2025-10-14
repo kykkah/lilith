@@ -21,7 +21,6 @@ package de.huxhorn.lilith.conditions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import de.huxhorn.lilith.data.access.HttpStatus;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
