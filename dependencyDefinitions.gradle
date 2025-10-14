@@ -5,6 +5,7 @@ project.ext.versions = [
         groovy   : '3.0.21',
         spock    : '2.3-groovy-3.0',
         junit    : '4.13.2',
+        junitJupiter: '5.10.2',
         byteBuddy: '1.12.3',
 
         // logging stack
@@ -42,6 +43,8 @@ project.ext.libraries = [
         'groovy-xml'      : "org.codehaus.groovy:groovy-xml:${versions.groovy}",
         'spock-core'      : "org.spockframework:spock-core:${versions.spock}",
         'junit'           : "junit:junit:${versions.junit}",
+        'junit-jupiter-api'    : "org.junit.jupiter:junit-jupiter-api:${versions.junitJupiter}",
+        'junit-jupiter-engine' : "org.junit.jupiter:junit-jupiter-engine:${versions.junitJupiter}",
 
         // logging stack
         'slf4j-api'       : "org.slf4j:slf4j-api:${versions.slf4j}",

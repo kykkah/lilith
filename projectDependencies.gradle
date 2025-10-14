@@ -334,7 +334,10 @@ project(':jul:jul-xml-receiver') {
             implementation project(':lilith-data:logging')
             implementation project(':lilith-data:eventsource')
             implementation project(':jul:jul-xml')
+            testImplementation libraries.'junit-jupiter-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
     }
 }
 
