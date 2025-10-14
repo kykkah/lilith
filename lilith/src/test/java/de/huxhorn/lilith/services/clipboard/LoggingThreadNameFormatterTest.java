@@ -16,32 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.services.clipboard
+package de.huxhorn.lilith.services.clipboard;
 
-class LoggingMessageFormatterSpec extends AbstractClipboardFormatterSpec {
+import java.util.List;
+import java.util.Set;
 
-	@Override
-	LoggingMessageFormatter createInstance() {
-		return new LoggingMessageFormatter()
-	}
+class LoggingThreadNameFormatterTest extends AbstractClipboardFormatterTest {
 
-	def Set<Integer> expectedIndices() {
-		[17, 18, 19, 20, 21, 22, 23]
-	}
+    @Override
+    protected LoggingThreadNameFormatter createInstance() {
+        return new LoggingThreadNameFormatter();
+    }
 
-	def List<String> expectedResults() {
-		[
-				'a message.',
-				'another message.',
-				'a message with parameter paramValue.',
-				'a message with unresolved parameter {}.',
-				'a message with parameter paramValue and unresolved parameter {}.',
-				'paramValue',
-				'{}',
-		]
-	}
+    @Override
+    protected Set<Integer> expectedIndices() {
+        return Set.of(83);
+    }
 
-	boolean expectedAcceleratorAvailability() {
-		true
-	}
+    @Override
+    protected List<String> expectedResults() {
+        return List.of("threadName");
+    }
 }

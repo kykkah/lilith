@@ -16,28 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.services.clipboard
+package de.huxhorn.lilith.services.clipboard;
 
-class LoggingMarkerFormatterSpec extends AbstractClipboardFormatterSpec {
+import java.util.List;
+import java.util.Set;
 
-	@Override
-	LoggingMarkerFormatter createInstance() {
-		return new LoggingMarkerFormatter()
-	}
+class LoggingThreadGroupNameFormatterTest extends AbstractClipboardFormatterTest {
 
-	def Set<Integer> expectedIndices() {
-		[31, 32, 88]
-	}
+    @Override
+    protected LoggingThreadGroupNameFormatter createInstance() {
+        return new LoggingThreadGroupNameFormatter();
+    }
 
-	def List<String> expectedResults() {
-		[
-				'- Foo-Marker\n' +
-						'  - Bar-Marker\n',
+    @Override
+    protected Set<Integer> expectedIndices() {
+        return Set.of(85);
+    }
 
-				'- Bar-Marker\n',
-
-				'- Recursive-Marker\n' +
-						'  - Recursive-Marker [..]\n',
-		]
-	}
+    @Override
+    protected List<String> expectedResults() {
+        return List.of("groupName");
+    }
 }

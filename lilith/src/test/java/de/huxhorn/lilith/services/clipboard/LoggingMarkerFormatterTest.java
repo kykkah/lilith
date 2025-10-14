@@ -16,31 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.huxhorn.lilith.services.clipboard
+package de.huxhorn.lilith.services.clipboard;
 
-class LoggingNdcFormatterSpec extends AbstractClipboardFormatterSpec {
+import java.util.List;
+import java.util.Set;
 
-	@Override
-	LoggingNdcFormatter createInstance() {
-		return new LoggingNdcFormatter()
-	}
+class LoggingMarkerFormatterTest extends AbstractClipboardFormatterTest {
 
-	def Set<Integer> expectedIndices() {
-		[34, 35, 36, 37, 38, 39, 40, 41, 42, 87]
-	}
+    @Override
+    protected LoggingMarkerFormatter createInstance() {
+        return new LoggingMarkerFormatter();
+    }
 
-	def List<String> expectedResults() {
-		[
-				'null',
-				'null',
-				'a message.',
-				'another message.',
-				'a message with parameter paramValue.',
-				'a message with unresolved parameter {}.',
-				'a message with parameter paramValue and unresolved parameter {}.',
-				'paramValue',
-				'{}',
-				'b0rked1\nnull\nb0rked3',
-		]
-	}
+    @Override
+    protected Set<Integer> expectedIndices() {
+        return Set.of(31, 32, 88);
+    }
+
+    @Override
+    protected List<String> expectedResults() {
+        return List.of(
+                "- Foo-Marker\n  - Bar-Marker\n",
+                "- Bar-Marker\n",
+                "- Recursive-Marker\n  - Recursive-Marker [..]\n");
+    }
 }

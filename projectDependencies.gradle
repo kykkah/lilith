@@ -13,6 +13,7 @@ subprojects { proj ->
             testImplementation libraries.'slf4j-api'
         }
     }
+    tasks.withType(Test).configureEach { useJUnitPlatform() }
 }
 
 project(':lilith-data:eventsource-xml') {
@@ -89,8 +90,11 @@ project(':lilith') {
         implementation project(':logback:classic')
         testImplementation project(':lilith-data:corpus')
         testImplementation libraries.'sulky-junit'
+        testImplementation libraries.'junit-jupiter-api'
+        testImplementation libraries.'junit-jupiter-params'
         testRuntimeOnly libraries.'objenesis'
         testRuntimeOnly libraries.'byte-buddy'
+        testRuntimeOnly libraries.'junit-jupiter-engine'
         runtimeOnly libraries.'jcl-over-slf4j'
         runtimeOnly libraries.'log4j2-core'
         runtimeOnly libraries.'spring-boot-ext-logback-access'
