@@ -430,7 +430,10 @@ project(':log4j:decoder-log4j2') {
             implementation project(':lilith-data:logging')
             implementation project(':lilith-data:converter')
             testImplementation project(':lilith-data:logging-io-test')
+            testImplementation libraries.'junit-jupiter-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
     }
 }
 

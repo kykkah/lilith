@@ -32,53 +32,48 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.log4j2.decoder
+package de.huxhorn.lilith.log4j2.decoder;
 
-import de.huxhorn.lilith.data.logging.LoggingEvent
-import de.huxhorn.sulky.codec.Decoder
-import spock.lang.Specification
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.nio.charset.StandardCharsets
+import de.huxhorn.lilith.data.logging.LoggingEvent;
+import de.huxhorn.sulky.codec.Decoder;
+import java.nio.charset.StandardCharsets;
+import org.junit.jupiter.api.Test;
 
-abstract class Log4j2DecoderSpecBase extends Specification {
+abstract class Log4j2DecoderTestBase {
 
-	abstract String getInputString()
-	abstract Decoder<LoggingEvent> getDecoder()
+    protected abstract String inputString();
 
-	def 'decoder is producing an event for valid input'() {
-		given:
-		def inputString = getInputString()
-		def inputBytes = inputString.getBytes(StandardCharsets.UTF_8)
-		def decoder = getDecoder()
+    protected abstract Decoder<LoggingEvent> decoder();
 
-		when:
-		def result = decoder.decode(inputBytes)
+    @Test
+    void decoderProducesEventForValidInput() {
+        byte[] inputBytes = inputString().getBytes(StandardCharsets.UTF_8);
+        Decoder<LoggingEvent> decoder = decoder();
 
-		then:
-		result != null
-	}
+        LoggingEvent result = decoder.decode(inputBytes);
 
-	def 'decoder is returning null for null input'() {
-		given:
-		def decoder = getDecoder()
+        assertNotNull(result);
+    }
 
-		when:
-		def result = decoder.decode(null)
+    @Test
+    void decoderReturnsNullForNullInput() {
+        Decoder<LoggingEvent> decoder = decoder();
 
-		then:
-		result == null
-	}
+        LoggingEvent result = decoder.decode(null);
 
-	def 'decoder is returning null for invalid input'() {
-		given:
-		def inputString = '#invalid'
-		def inputBytes = inputString.getBytes(StandardCharsets.UTF_8)
-		def decoder = getDecoder()
+        assertNull(result);
+    }
 
-		when:
-		def result = decoder.decode(inputBytes)
+    @Test
+    void decoderReturnsNullForInvalidInput() {
+        byte[] inputBytes = "#invalid".getBytes(StandardCharsets.UTF_8);
+        Decoder<LoggingEvent> decoder = decoder();
 
-		then:
-		result == null
-	}
+        LoggingEvent result = decoder.decode(inputBytes);
+
+        assertNull(result);
+    }
 }
