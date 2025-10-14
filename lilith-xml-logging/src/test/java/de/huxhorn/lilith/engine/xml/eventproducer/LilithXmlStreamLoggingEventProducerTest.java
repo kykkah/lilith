@@ -15,15 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.huxhorn.lilith.engine.xml.eventproducer
+package de.huxhorn.lilith.engine.xml.eventproducer;
 
-import spock.lang.Specification
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LilithXmlStreamLoggingEventProducerSpec extends Specification {
-	def 'correct InputFactory is obtained'() {
-		setup:
-		String factoryClassName = LilithXmlStreamLoggingEventProducer.XML_INPUT_FACTORY.class.name
-		expect:
-		factoryClassName.startsWith("com.ctc.wstx.stax")
+import org.junit.jupiter.api.Test;
+
+class LilithXmlStreamLoggingEventProducerTest {
+
+	@Test
+	void correctInputFactoryIsObtained() {
+		String factoryClassName = LilithXmlStreamLoggingEventProducer.XML_INPUT_FACTORY.getClass().getName();
+		assertTrue(factoryClassName.startsWith("com.ctc.wstx.stax"),
+			"Factory is expected to be provided by Woodstox");
 	}
 }

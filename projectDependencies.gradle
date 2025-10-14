@@ -217,7 +217,10 @@ project(':lilith-xml-logging') {
             implementation libraries.'sulky-codec'
             implementation libraries.'slf4j-api'
             implementation libraries.'sulky-stax'
+            testImplementation libraries.'junit-jupiter-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
     }
 }
 
