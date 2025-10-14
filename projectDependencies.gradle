@@ -630,6 +630,10 @@ project(':logback:tools') {
         dependencies {
             implementation libraries.'logback-core'
             implementation libraries.'slf4j-api'
+            testImplementation libraries.'logback-classic'
+            testImplementation libraries.'junit-jupiter-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
     }
 }

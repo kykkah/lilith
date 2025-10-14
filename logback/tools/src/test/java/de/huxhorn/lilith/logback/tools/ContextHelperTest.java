@@ -32,27 +32,25 @@
  * limitations under the License.
  */
 
-package de.huxhorn.lilith.logback.tools
+package de.huxhorn.lilith.logback.tools;
 
-import ch.qos.logback.core.Context
-import org.slf4j.LoggerFactory
-import spock.lang.Specification;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class ContextHelperSpec extends Specification
-{
-    def "Don't return fail for getHighestLevel call."()
-    {
-        setup:
+import ch.qos.logback.core.Context;
+import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
+
+class ContextHelperTest {
+
+    @Test
+    void getHighestLevelDoesNotReturnFail() {
         Context context = (Context) LoggerFactory.getILoggerFactory();
-        expect:
-        ContextHelper.FAIL != ContextHelper.getHighestLevel(context)
+        assertNotEquals(ContextHelper.FAIL, ContextHelper.getHighestLevel(context));
     }
 
-    def "Don't return fail for getTimeOfLastReset call."()
-    {
-        setup:
+    @Test
+    void getTimeOfLastResetDoesNotReturnFail() {
         Context context = (Context) LoggerFactory.getILoggerFactory();
-        expect:
-        ContextHelper.FAIL != ContextHelper.getTimeOfLastReset(context)
+        assertNotEquals(ContextHelper.FAIL, ContextHelper.getTimeOfLastReset(context));
     }
 }
