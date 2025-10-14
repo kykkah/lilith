@@ -311,8 +311,7 @@ public class TroubleshootingPanel
 		private void appendGroup(int indent, StringBuilder builder, ThreadGroup group, Map<ThreadGroup, List<ThreadGroup>> threadGroups, Map<ThreadGroup, List<ThreadHolder>> threadGroupMapping)
 		{
 			String indentStr = createIndent(indent);
-			builder.append(indentStr).append("ThreadGroup[name='").append(group.getName()).append("'" + ", daemon=")
-				.append(group.isDaemon()).append(", destroyed=").append(group.isDestroyed()).append(", maxPriority=")
+			builder.append(indentStr).append("ThreadGroup[name='").append(group.getName()).append("', maxPriority=")
 				.append(group.getMaxPriority()).append("]\n");
 
 			List<ThreadGroup> groups = threadGroups.get(group);

@@ -10,7 +10,7 @@ buildscript {
         // quality / infra plugins
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
-        classpath 'de.thetaphi:forbiddenapis:3.2'
+        classpath 'de.thetaphi:forbiddenapis:3.6'
         // application packaging (shadow)
         classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
     }
@@ -27,9 +27,8 @@ wrapper {
 }
 
 def copyright = "Copyright \u00a9 2007-2021 J\u00f6rn Huxhorn"
-def globalSourceCompatibility = 1.8
-def globalTargetCompatibility = 1.8
-
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.plugins.signing.Sign
 
 // Local Maven repositories used for publishing/consuming
@@ -69,7 +68,7 @@ allprojects {
         mavenCentral()
     }
 
-    jacoco { toolVersion = '0.8.7' }
+    jacoco { toolVersion = '0.8.11' }
 }
 
 subprojects { proj ->
@@ -82,13 +81,16 @@ subprojects { proj ->
     apply plugin: 'pmd'
 
     // Java toolchain compatibility
-    sourceCompatibility = globalSourceCompatibility
-    targetCompatibility = globalTargetCompatibility
-
-    // Generate -sources.jar and -javadoc.jar for publications
     java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
         withSourcesJar()
         withJavadocJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 17
     }
 
     checkstyle {
@@ -111,9 +113,9 @@ subprojects { proj ->
 
     forbiddenApis {
         bundledSignatures = [
-                'jdk-unsafe-1.8',
-                'jdk-deprecated-1.8',
-                'jdk-internal-1.8',
+                'jdk-unsafe',
+                'jdk-deprecated-17',
+                'jdk-internal-17',
                 'jdk-non-portable',
                 'jdk-reflection',
         ]

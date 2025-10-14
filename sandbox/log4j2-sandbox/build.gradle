@@ -1,6 +1,9 @@
 apply from: '../../dependencyDefinitions.gradle'
 apply from: '../sandboxDefaults.gradle'
 
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.api.tasks.compile.JavaCompile
+
 apply plugin: 'application'
 apply plugin: 'idea'
 
@@ -10,18 +13,25 @@ application {
 	mainClass = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'
 }
 
-def globalSourceCompatibility = 1.8
-def globalTargetCompatibility = 1.8
+def ideaLanguageLevel = 'JDK_17'
+def javaMajorVersion = '17'
 
 idea {
 	project {
-		jdkName = globalSourceCompatibility
-		languageLevel = globalSourceCompatibility
+		jdkName = javaMajorVersion
+		languageLevel = ideaLanguageLevel
 	}
 }
 
-sourceCompatibility = globalSourceCompatibility
-targetCompatibility = globalTargetCompatibility
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.release = 17
+}
 
 dependencies {
 	implementation libraries.'log4j2-api'

@@ -1,0 +1,28 @@
+import org.gradle.api.tasks.compile.GroovyCompile
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+plugins {
+	id 'groovy'
+}
+
+repositories {
+	gradlePluginPortal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation gradleApi()
+	implementation localGroovy()
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+tasks.withType(GroovyCompile).configureEach {
+	javaLauncher.set(javaToolchains.launcherFor {
+		languageVersion = JavaLanguageVersion.of(17)
+	})
+}
