@@ -182,8 +182,11 @@ project(':lilith-data:corpus') {
             implementation project(':lilith-data:access')
             implementation project(':lilith-data:eventsource')
             implementation project(':lilith-data:logging')
+            testImplementation libraries.'junit-jupiter-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
         }
     }
+    tasks.withType(Test).configureEach { useJUnitPlatform() }
 }
 
 project(':lilith-data:logging-io-test') {
