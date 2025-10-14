@@ -45,6 +45,7 @@ project.ext.libraries = [
         'junit'           : "junit:junit:${versions.junit}",
         'junit-jupiter-api'    : "org.junit.jupiter:junit-jupiter-api:${versions.junitJupiter}",
         'junit-jupiter-engine' : "org.junit.jupiter:junit-jupiter-engine:${versions.junitJupiter}",
+        'junit-jupiter-params' : "org.junit.jupiter:junit-jupiter-params:${versions.junitJupiter}",
 
         // logging stack
         'slf4j-api'       : "org.slf4j:slf4j-api:${versions.slf4j}",
