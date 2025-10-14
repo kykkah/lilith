@@ -92,6 +92,7 @@ project(':lilith') {
         testImplementation libraries.'sulky-junit'
         testImplementation libraries.'junit-jupiter-api'
         testImplementation libraries.'junit-jupiter-params'
+        testImplementation libraries.'mockito-core'
         testRuntimeOnly libraries.'objenesis'
         testRuntimeOnly libraries.'byte-buddy'
         testRuntimeOnly libraries.'junit-jupiter-engine'
