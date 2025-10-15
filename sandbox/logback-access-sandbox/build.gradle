@@ -1,19 +1,13 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '2.7.18'
+}
+
 apply from: '../../dependencyDefinitions.gradle'
 apply from: '../sandboxDefaults.gradle'
-
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-
-	dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE")
-    }
-}
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '3.5'
-}
 
 /*
 class ConfigurationDetectionDependencyResolutionListener
@@ -96,14 +90,20 @@ class ConfigurationDetectionDependencyResolutionListener
 gradle.addListener(new ConfigurationDetectionDependencyResolutionListener(gradle))
 */
 
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-
 version = '1.0.0-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.18'
 	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-access:${lilithVersion}"
 	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.appender.multiplex-classic:${lilithVersion}"
 	runtimeOnly "de.huxhorn.lilith:de.huxhorn.lilith.logback.encoder.access:${lilithVersion}"
@@ -112,5 +112,5 @@ dependencies {
 	implementation libraries.'logback-access'
 	implementation libraries.'logback-core'
 	implementation libraries.'logback-classic'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.18'
 }
