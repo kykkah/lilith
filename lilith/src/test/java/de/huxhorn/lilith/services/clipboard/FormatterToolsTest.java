@@ -27,11 +27,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class FormatterToolsTest {
 
-    private static final Map<Foo, String> FOO_MAP = new HashMap<>();
+    private static final Map<FormatterValue, String> FOO_MAP = new HashMap<>();
     private static final Map<String, String> NULL_MAP = new HashMap<>();
 
     static {
-        FOO_MAP.put(new Foo("1"), "x");
+        FOO_MAP.put(new FormatterValue("1"), "x");
         NULL_MAP.put(null, "x");
     }
 
@@ -167,7 +167,7 @@ class FormatterToolsTest {
                 arg("objectArrayWithNull", new Object[] {null}, false),
                 arg(
                         "setWithFooInstance",
-                        new HashSet<>(Collections.singleton(new Foo("1"))),
+                        new HashSet<>(Collections.singleton(new FormatterValue("1"))),
                         false),
                 arg("fooMap", FOO_MAP, false),
                 arg("nullMap", NULL_MAP, false));
@@ -200,9 +200,9 @@ class FormatterToolsTest {
                 arg("objectArrayWithNull", new Object[] {null}, "[null]"),
                 arg(
                         "setWithFooInstance",
-                        new HashSet<>(Collections.singleton(new Foo("1"))),
-                        "[Foo{value=\'1\'}]"),
-                arg("fooMap", FOO_MAP, "[Foo{value=\'1\'}:\'x\']"),
+                        new HashSet<>(Collections.singleton(new FormatterValue("1"))),
+                        "[FormatterValue{value=\'1\'}]"),
+                arg("fooMap", FOO_MAP, "[FormatterValue{value=\'1\'}:\'x\']"),
                 arg("nullMap", NULL_MAP, "[null:\'x\']"));
     }
 
@@ -449,10 +449,10 @@ class FormatterToolsTest {
         return info;
     }
 
-    private static final class Foo {
+    private static final class FormatterValue {
         private final String value;
 
-        private Foo(String value) {
+        private FormatterValue(String value) {
             this.value = value;
         }
 
@@ -461,10 +461,10 @@ class FormatterToolsTest {
             if (this == obj) {
                 return true;
             }
-            if (!(obj instanceof Foo)) {
+            if (!(obj instanceof FormatterValue)) {
                 return false;
             }
-            Foo other = (Foo) obj;
+            FormatterValue other = (FormatterValue) obj;
             return value != null ? value.equals(other.value) : other.value == null;
         }
 
@@ -475,7 +475,7 @@ class FormatterToolsTest {
 
         @Override
         public String toString() {
-            return "Foo{value='" + value + "'}";
+            return "FormatterValue{value='" + value + "'}";
         }
     }
 }

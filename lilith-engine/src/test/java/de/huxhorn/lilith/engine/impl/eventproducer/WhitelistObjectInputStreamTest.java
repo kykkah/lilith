@@ -38,7 +38,7 @@ class WhitelistObjectInputStreamTest {
 
     @Test
     void blockedDryRunningWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
 
         Set<String> whitelist = new HashSet<>();
@@ -48,86 +48,86 @@ class WhitelistObjectInputStreamTest {
 
             assertTrue(instance.isDryRunning());
             assertEquals(foo, read);
-            assertTrue(instance.getUnauthorized().contains(Foo.class.getName()));
+            assertTrue(instance.getUnauthorized().contains(SerializableSample.class.getName()));
         }
     }
 
     @Test
     void unblockedDryRunningWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
 
         Set<String> whitelist = new HashSet<>();
-        whitelist.add(Foo.class.getName());
+        whitelist.add(SerializableSample.class.getName());
         try (WhitelistObjectInputStream instance =
                 new WhitelistObjectInputStream(new ByteArrayInputStream(bytes), whitelist, false, true)) {
             Object read = instance.readObject();
 
             assertTrue(instance.isDryRunning());
             assertEquals(foo, read);
-            assertFalse(instance.getUnauthorized().contains(Foo.class.getName()));
+            assertFalse(instance.getUnauthorized().contains(SerializableSample.class.getName()));
         }
     }
 
     @Test
     void blockedWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
 
         Set<String> whitelist = new HashSet<>();
         try (WhitelistObjectInputStream instance =
                 new WhitelistObjectInputStream(new ByteArrayInputStream(bytes), whitelist)) {
             ClassNotFoundException ex = assertThrows(ClassNotFoundException.class, instance::readObject);
-            assertEquals("Unauthorized deserialization attempt! " + Foo.class.getName(), ex.getMessage());
-            assertTrue(instance.getUnauthorized().contains(Foo.class.getName()));
+            assertEquals("Unauthorized deserialization attempt! " + SerializableSample.class.getName(), ex.getMessage());
+            assertTrue(instance.getUnauthorized().contains(SerializableSample.class.getName()));
             assertFalse(instance.isDryRunning());
         }
     }
 
     @Test
     void unblockedWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
 
         Set<String> whitelist = new HashSet<>();
-        whitelist.add(Foo.class.getName());
+        whitelist.add(SerializableSample.class.getName());
         try (WhitelistObjectInputStream instance =
                 new WhitelistObjectInputStream(new ByteArrayInputStream(bytes), whitelist)) {
             Object read = instance.readObject();
 
             assertFalse(instance.isDryRunning());
             assertEquals(foo, read);
-            assertFalse(instance.getUnauthorized().contains(Foo.class.getName()));
+            assertFalse(instance.getUnauthorized().contains(SerializableSample.class.getName()));
         }
     }
 
     @Test
     void copySetTrueWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
-        Set<String> whitelist = new HashSet<>(Arrays.asList(Foo.class.getName(), "Something"));
+        Set<String> whitelist = new HashSet<>(Arrays.asList(SerializableSample.class.getName(), "Something"));
 
         try (WhitelistObjectInputStream instance =
                 new WhitelistObjectInputStream(new ByteArrayInputStream(bytes), whitelist, true)) {
             whitelist.remove("Something");
 
             assertTrue(instance.getWhitelist().contains("Something"));
-            assertTrue(instance.getWhitelist().contains(Foo.class.getName()));
+            assertTrue(instance.getWhitelist().contains(SerializableSample.class.getName()));
         }
     }
 
     @Test
     void copySetFalseWorksAsExpected() throws Exception {
-        Foo foo = new Foo("bar");
+        SerializableSample foo = new SerializableSample("bar");
         byte[] bytes = serialize(foo);
-        Set<String> whitelist = new HashSet<>(Arrays.asList(Foo.class.getName(), "Something"));
+        Set<String> whitelist = new HashSet<>(Arrays.asList(SerializableSample.class.getName(), "Something"));
 
         try (WhitelistObjectInputStream instance =
                 new WhitelistObjectInputStream(new ByteArrayInputStream(bytes), whitelist, false)) {
             whitelist.remove("Something");
 
             assertFalse(instance.getWhitelist().contains("Something"));
-            assertTrue(instance.getWhitelist().contains(Foo.class.getName()));
+            assertTrue(instance.getWhitelist().contains(SerializableSample.class.getName()));
         }
     }
 
@@ -139,10 +139,11 @@ class WhitelistObjectInputStreamTest {
         return bos.toByteArray();
     }
 
-    private static final class Foo implements Serializable {
+    private static final class SerializableSample implements Serializable {
+        private static final long serialVersionUID = 1L;
         private final String name;
 
-        private Foo(String name) {
+        private SerializableSample(String name) {
             this.name = name;
         }
 
@@ -151,11 +152,11 @@ class WhitelistObjectInputStreamTest {
             if (this == o) {
                 return true;
             }
-            if (!(o instanceof Foo)) {
+            if (!(o instanceof SerializableSample)) {
                 return false;
             }
-            Foo foo = (Foo) o;
-            return Objects.equals(name, foo.name);
+            SerializableSample other = (SerializableSample) o;
+            return Objects.equals(name, other.name);
         }
 
         @Override

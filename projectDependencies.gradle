@@ -7,10 +7,10 @@ subprojects { proj ->
     plugins.withId('java') {
         dependencies {
             testImplementation libraries.'junit'
-            testImplementation libraries.'groovy'
-            testImplementation libraries.'spock-core'
             testImplementation libraries.'sulky-junit'
             testImplementation libraries.'slf4j-api'
+            testRuntimeOnly libraries.'junit-jupiter-engine'
+            testRuntimeOnly libraries.'junit-vintage-engine'
         }
     }
     tasks.withType(Test).configureEach { useJUnitPlatform() }

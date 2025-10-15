@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import de.huxhorn.lilith.data.logging.ThrowableInfo;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -80,7 +80,7 @@ class ThrowableConditionTest {
     }
 
     private static Set<String> setOfStrings(String... values) {
-        LinkedHashSet<String> result = new LinkedHashSet<>();
+        Set<String> result = new HashSet<>();
         for (String value : values) {
             result.add(value);
         }

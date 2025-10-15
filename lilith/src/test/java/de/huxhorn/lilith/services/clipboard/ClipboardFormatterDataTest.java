@@ -80,6 +80,7 @@ class ClipboardFormatterDataTest {
     }
 
     private static final class FooFormatter implements ClipboardFormatter {
+        private static final long serialVersionUID = 1L;
         private final String name;
         private final String description;
         private final String accelerator;

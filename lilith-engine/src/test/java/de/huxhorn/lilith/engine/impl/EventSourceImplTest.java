@@ -83,6 +83,7 @@ class EventSourceImplTest {
     }
 
     private static final class DummyCondition implements Condition {
+        private static final long serialVersionUID = 1L;
 
         @Override
         public boolean isTrue(Object element) {
@@ -90,7 +91,7 @@ class EventSourceImplTest {
         }
 
         @Override
-        public Condition clone() {
+        public DummyCondition clone() {
             return this;
         }
     }

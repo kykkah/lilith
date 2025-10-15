@@ -19,7 +19,7 @@
 package de.huxhorn.lilith.conditions;
 
 import de.huxhorn.sulky.conditions.Condition;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -59,7 +59,7 @@ final class ConditionTestSupport {
     }
 
     static Set<Integer> setOf(int... values) {
-        LinkedHashSet<Integer> result = new LinkedHashSet<>();
+        Set<Integer> result = new HashSet<>();
         for (int value : values) {
             result.add(value);
         }
@@ -70,7 +70,7 @@ final class ConditionTestSupport {
         if (size < 0) {
             throw new IllegalArgumentException("size must be >= 0");
         }
-        LinkedHashSet<Integer> result = new LinkedHashSet<>();
+        Set<Integer> result = new HashSet<>();
         IntStream.range(0, size).forEach(result::add);
         return result;
     }

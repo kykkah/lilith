@@ -9,7 +9,7 @@ What I added
 ### Highlights
 
 - Module discovery: settings scans top-level lilith modules and submodules in lilith-data, jul, log4j, logback. Also includes 3rdparty:junique if present.
-- Central versions: dependencyDefinitions.gradle defines a versions map and reusable libraries map (slf4j, logback, groovy, spock, junit, protobuf, commons-io, jcommander).
+- Central versions: dependencyDefinitions.gradle defines a versions map and reusable libraries map (slf4j, logback, groovy, junit, protobuf, commons-io, jcommander).
 - Streamlined build: build.gradle targets Gradle 7.6, Java 8, defaultTasks 'build', convenience tasks appPackage, publishLocal, coverageReport, and aggregated jacocoRootReport + Coveralls wiring.
 - Repos + publishing: all projects use mavenLocal, Maven Central and the local release/snapshot dirs; maven-publish selects the local repo based on SNAPSHOT suffix; signing only for publications on non-SNAPSHOT.
 - Quality: subprojects get checkstyle, PMD, and forbiddenApis configured to match the overview.

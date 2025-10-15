@@ -591,6 +591,7 @@ class ExtendedStackTraceElementTest {
 		return element;
 	}
 
+	@SuppressWarnings("PMD.ExcessiveParameterList")
 	private static ExtendedStackTraceElement expected(String className, String methodName, String fileName,
 		Integer lineNumber, String codeLocation, String version, Boolean exact,
 		String classLoaderName, String moduleName, String moduleVersion) {

@@ -88,6 +88,7 @@ class ConditionCorpusTest {
     }
 
     private static final class MatchNoneCondition implements Condition {
+        private static final long serialVersionUID = 1L;
 
         @Override
         public boolean isTrue(Object element) {
@@ -95,8 +96,8 @@ class ConditionCorpusTest {
         }
 
         @Override
-        public Condition clone() throws CloneNotSupportedException {
-            return (Condition) super.clone();
+        public MatchNoneCondition clone() throws CloneNotSupportedException {
+            return (MatchNoneCondition) super.clone();
         }
 
         @Override
@@ -106,6 +107,7 @@ class ConditionCorpusTest {
     }
 
     private static final class MatchAllCondition implements Condition {
+        private static final long serialVersionUID = 1L;
 
         @Override
         public boolean isTrue(Object element) {
@@ -113,8 +115,8 @@ class ConditionCorpusTest {
         }
 
         @Override
-        public Condition clone() throws CloneNotSupportedException {
-            return (Condition) super.clone();
+        public MatchAllCondition clone() throws CloneNotSupportedException {
+            return (MatchAllCondition) super.clone();
         }
 
         @Override

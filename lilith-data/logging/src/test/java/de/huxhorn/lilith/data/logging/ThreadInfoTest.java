@@ -38,8 +38,8 @@ import static de.huxhorn.sulky.junit.JUnitTools.testClone;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -82,11 +82,11 @@ class ThreadInfoTest {
 	void equalsBehavesAsExpected(ThreadInfo inputValue) {
 		ThreadInfo empty = new ThreadInfo();
 
-		assertEquals(inputValue, inputValue);
-		assertFalse(inputValue.equals(null));
-		assertFalse(inputValue.equals(new Object()));
-		assertFalse(inputValue.equals(empty));
-		assertFalse(empty.equals(inputValue));
+	assertEquals(inputValue, inputValue);
+	assertNotEquals(inputValue, null);
+	assertNotEquals(inputValue, new Object());
+	assertNotEquals(inputValue, empty);
+	assertNotEquals(empty, inputValue);
 	}
 
 	private static Stream<ThreadInfo> inputValues() {

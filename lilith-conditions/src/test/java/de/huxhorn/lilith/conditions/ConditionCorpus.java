@@ -71,7 +71,7 @@ public final class ConditionCorpus {
     }
 
     @SuppressWarnings({"unused", "RedundantSuppression"})
-    private static class Foo implements Serializable {
+    private static class SerializablePlaceholder implements Serializable {
         private static final long serialVersionUID = -5207922872610875882L;
     }
 }

@@ -29,7 +29,7 @@ import de.huxhorn.lilith.data.access.HttpStatus;
 import de.huxhorn.lilith.data.eventsource.EventWrapper;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ class EventWrapperCorpusTest {
     void matchesAllSetWithEmptyInputReturnsEmptySet() {
         Set<Integer> result = EventWrapperCorpus.matchAllSet(Collections.emptyList());
 
-        assertEquals(Collections.emptySet(), new LinkedHashSet<>(result));
+        assertEquals(Collections.emptySet(), new HashSet<>(result));
     }
 
     @Test
@@ -59,12 +59,12 @@ class EventWrapperCorpusTest {
 
         Set<Integer> result = EventWrapperCorpus.matchAllSet(input);
 
-        LinkedHashSet<Integer> expected = new LinkedHashSet<>();
+        Set<Integer> expected = new HashSet<>();
         expected.add(0);
         expected.add(1);
         expected.add(2);
 
-        assertEquals(expected, new LinkedHashSet<>(result));
+        assertEquals(expected, new HashSet<>(result));
     }
 
     @Test
@@ -72,7 +72,7 @@ class EventWrapperCorpusTest {
         Set<Integer> expected = EventWrapperCorpus.matchAllSet(EventWrapperCorpus.createCorpus());
         Set<Integer> actual = EventWrapperCorpus.matchAllSet();
 
-        assertEquals(new LinkedHashSet<>(expected), new LinkedHashSet<>(actual));
+        assertEquals(new HashSet<>(expected), new HashSet<>(actual));
     }
 
     @Test

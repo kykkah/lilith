@@ -212,12 +212,12 @@ class ThrowableInfoTest {
 					e.setCodeLocation("codeLocation");
 					e.setVersion("version");
 					e.setExact(false);
-				})
+				}),
 			})),
 			throwable(info -> info.setCause(throwable(ci -> ci.setName("cause")))),
 			throwable(info -> info.setSuppressed(new ThrowableInfo[]{
 				throwable(ci -> ci.setName("suppressed1")),
-				throwable(ci -> ci.setName("suppressed2"))
+				throwable(ci -> ci.setName("suppressed2")),
 			})),
 			throwable(info -> {
 				info.setName("name");
@@ -241,12 +241,12 @@ class ThrowableInfoTest {
 						e.setCodeLocation("codeLocation");
 						e.setVersion("version");
 						e.setExact(false);
-					})
+					}),
 				});
 				info.setCause(throwable(ci -> ci.setName("cause")));
 				info.setSuppressed(new ThrowableInfo[]{
 					throwable(ci -> ci.setName("suppressed1")),
-					throwable(ci -> ci.setName("suppressed2"))
+					throwable(ci -> ci.setName("suppressed2")),
 				});
 			})
 		);
@@ -257,16 +257,16 @@ class ThrowableInfoTest {
 		recursiveCause.setCause(recursiveCause);
 
 		ThrowableInfo recursiveSuppressed = new ThrowableInfo();
-		recursiveSuppressed.setSuppressed(new ThrowableInfo[]{recursiveSuppressed});
+		recursiveSuppressed.setSuppressed(new ThrowableInfo[]{recursiveSuppressed,});
 
-		ThrowableInfo nullSuppressed1 = throwable(info -> info.setSuppressed(new ThrowableInfo[]{null}));
+		ThrowableInfo nullSuppressed1 = throwable(info -> info.setSuppressed(new ThrowableInfo[]{null,}));
 		ThrowableInfo nullSuppressed2 = throwable(info -> info.setSuppressed(new ThrowableInfo[]{
-			new ThrowableInfo(), null, new ThrowableInfo()
+			new ThrowableInfo(), null, new ThrowableInfo(),
 		}));
 
-		ThrowableInfo nullStack1 = throwable(info -> info.setStackTrace(new ExtendedStackTraceElement[]{null}));
+		ThrowableInfo nullStack1 = throwable(info -> info.setStackTrace(new ExtendedStackTraceElement[]{null,}));
 		ThrowableInfo nullStack2 = throwable(info -> info.setStackTrace(new ExtendedStackTraceElement[]{
-			new ExtendedStackTraceElement(), null, new ExtendedStackTraceElement()
+			new ExtendedStackTraceElement(), null, new ExtendedStackTraceElement(),
 		}));
 
 		return Stream.of(recursiveCause, recursiveSuppressed, nullSuppressed1, nullSuppressed2, nullStack1, nullStack2);

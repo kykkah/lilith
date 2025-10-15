@@ -42,7 +42,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -77,7 +76,7 @@ class MessageFormatterTest {
 
 	@Test
 	void argumentResultStoresArgumentsAndThrowable() {
-		String[] arguments = new String[]{"foo"};
+		String[] arguments = {"foo"};
 		ExceptionWithEqualsAndHashCode throwable = new ExceptionWithEqualsAndHashCode("bar");
 
 		MessageFormatter.ArgumentResult instance = new MessageFormatter.ArgumentResult(arguments, throwable);
@@ -150,13 +149,6 @@ class MessageFormatterTest {
 		assertEquals(foo1.hashCode(), foo2.hashCode());
 		assertNotEquals(foo1, bar);
 		assertNotEquals(foo1.hashCode(), bar.hashCode());
-	}
-
-	@Test
-	void defaultConstructorCoverage() throws Exception {
-		Constructor<MessageFormatter> constructor = MessageFormatter.class.getDeclaredConstructor();
-		constructor.setAccessible(true);
-		constructor.newInstance();
 	}
 
 	private static Stream<MessageFormatter.ArgumentResult> argumentResultValues() {
@@ -293,6 +285,7 @@ class MessageFormatterTest {
 	}
 
 	private static class ExceptionWithEqualsAndHashCode extends RuntimeException {
+		private static final long serialVersionUID = 1L;
 		private final String value;
 
 		private ExceptionWithEqualsAndHashCode(String value) {
