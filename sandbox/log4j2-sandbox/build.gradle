@@ -7,7 +7,9 @@ import org.gradle.api.tasks.compile.JavaCompile
 apply plugin: 'application'
 apply plugin: 'idea'
 
-archivesBaseName = 'log4j2-sandbox'
+base {
+	archivesName = 'log4j2-sandbox'
+}
 
 application {
 	mainClass = 'de.huxhorn.lilith.sandbox.Log4j2Sandbox'

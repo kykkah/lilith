@@ -23,6 +23,8 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.plugins.BasePluginExtension
+import org.gradle.api.tasks.bundling.Jar
 
 
 /**
@@ -99,10 +101,13 @@ public class DetectSplitPackagesTask extends DefaultTask {
 				moduleNameProjects.put(commonName, projects)
 			}
 			projects.add(project)
-			if(!commonName.equals(project.jar.manifest.getAttributes().get('Automatic-Module-Name'))) {
+			Jar jarTask = project.tasks.findByName('jar') as Jar
+			String automaticModuleName = jarTask?.manifest?.attributes?.get('Automatic-Module-Name')
+			String archivesBaseName = resolveArchivesBaseName(project)
+			if(!commonName.equals(automaticModuleName)) {
 				correct = false
-				if(!commonName.equals(project.archivesBaseName)) {
-					println "!!! ${project}\t${project.archivesBaseName}\t${commonName}"
+				if(!commonName.equals(archivesBaseName)) {
+					println "!!! ${project}\t${archivesBaseName}\t${commonName}"
 				} else {
 					println "${project}\t${commonName}"
 				}
@@ -177,6 +182,13 @@ public class DetectSplitPackagesTask extends DefaultTask {
 			}
 		}
 		return packagesByProject;
+	}
+
+	private static String resolveArchivesBaseName(Project project) {
+		BasePluginExtension base = project.extensions.findByType(BasePluginExtension)
+		def archivesNameProperty = base?.archivesName
+		def archivesName = archivesNameProperty?.getOrNull()
+		return archivesName ?: project.name
 	}
 
 	private static void findPackages(Set<String> packages, File dir, String packagePath) {
