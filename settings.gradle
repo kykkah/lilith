@@ -13,6 +13,8 @@ plugins {
 // Lilith multi-module settings
 rootProject.name = 'lilith'
 
+includeBuild('build-logic')
+
 // Explicit top-level modules
 def topLevelModules = [
         'lilith',
