@@ -8,6 +8,7 @@ buildscript {
     }
     dependencies {
         // quality / infra plugins
+        classpath 'de.huxhorn.lilith.buildlogic:build-logic:1.0-SNAPSHOT'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
         classpath 'de.thetaphi:forbiddenapis:3.10'

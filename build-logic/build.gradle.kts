@@ -1,9 +1,21 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
 plugins {
     `kotlin-dsl`
+    groovy
 }
+
+group = "de.huxhorn.lilith.buildlogic"
+version = "1.0-SNAPSHOT"
 
 kotlin {
     jvmToolchain(17)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 repositories {
@@ -19,4 +31,5 @@ dependencies {
     implementation("org.ow2.asm:asm:9.4")
     implementation("org.ow2.asm:asm-commons:9.4")
     implementation("de.thetaphi:forbiddenapis:3.10")
+    implementation(localGroovy())
 }
