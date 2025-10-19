@@ -20,8 +20,8 @@ apply from: 'dependencyDefinitions.gradle'
 apply from: 'projectDependencies.gradle'
 
 wrapper {
-	gradleVersion = '8.4'
-	// distributionType = Wrapper.DistributionType.ALL}
+	gradleVersion = '8.13'
+	distributionType = Wrapper.DistributionType.ALL
 	// TODO:
 	// MacAppBundle
 }

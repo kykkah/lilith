@@ -9,6 +9,13 @@ plugins {
 apply from: '../../dependencyDefinitions.gradle'
 apply from: '../sandboxDefaults.gradle'
 
+wrapper {
+	gradleVersion = '8.13'
+	distributionType = Wrapper.DistributionType.ALL
+	// TODO:
+	// MacAppBundle
+}
+
 /*
 class ConfigurationDetectionDependencyResolutionListener
         implements DependencyResolutionListener, BuildListener {
