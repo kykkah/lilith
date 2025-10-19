@@ -3,16 +3,16 @@
 
 buildscript {
     repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url = uri("https://plugins.gradle.org/m2/") }
         mavenCentral()
     }
     dependencies {
         // quality / infra plugins
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
-        classpath 'de.thetaphi:forbiddenapis:3.6'
+        classpath 'de.thetaphi:forbiddenapis:3.10'
         // application packaging (shadow)
-        classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
+        classpath 'com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:8.1.1'
     }
 }
 
@@ -68,8 +68,8 @@ allprojects {
     }
 
     repositories {
-        maven { url localReleaseRepo }
-        maven { url localSnapshotRepo }
+        maven { url = uri(localReleaseRepo) }
+        maven { url = uri(localSnapshotRepo) }
         mavenLocal()
         mavenCentral()
     }
@@ -222,7 +222,7 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
     reports {
         html.required.set(true)
         xml.required.set(true)
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        xml.outputLocation.set(file("${buildDir}/reports/jacoco/report.xml"))
         csv.required.set(false)
     }
     doFirst {

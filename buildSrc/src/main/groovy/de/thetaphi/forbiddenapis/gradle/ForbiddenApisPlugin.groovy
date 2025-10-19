@@ -1,0 +1,106 @@
+/*
+ * (C) Copyright Uwe Schindler (Generics Policeman) and others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package de.thetaphi.forbiddenapis.gradle;
+
+import org.gradle.api.GradleException;
+import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaPluginExtension;
+import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.util.GradleVersion;
+
+/**
+ * Forbiddenapis Gradle Plugin (requires at least Gradle v3.2)
+ * @since 2.0
+ */
+public class ForbiddenApisPlugin extends ForbiddenApisPluginBase {
+  
+  @Override
+  public void apply(Project project) {
+    if (GradleVersion.current().compareTo(MIN_GRADLE_VERSION) < 0) {
+      throw new GradleException("Forbiddenapis plugin requires at least " + MIN_GRADLE_VERSION + ", running version is " + GradleVersion.current());
+    }
+
+    project.plugins.apply(JavaBasePlugin.class);
+
+    // create Extension for defaults:
+    def extension = project.extensions.create(FORBIDDEN_APIS_EXTENSION_NAME, CheckForbiddenApisExtension.class, project);
+
+    // Create a convenience task for all checks (this does not conflict with extension, as it has higher priority in DSL):
+    def forbiddenTask = TASK_AVOIDANCE_AVAILABLE ? project.tasks.register(FORBIDDEN_APIS_TASK_NAME) : project.tasks.create(FORBIDDEN_APIS_TASK_NAME)
+    forbiddenTask.configure {
+      description = "Runs forbidden-apis checks.";
+      group = JavaBasePlugin.VERIFICATION_GROUP;
+    }
+
+    // retrieve Java Extension and sourceSets; if not available, fallback to project convention:
+    def javaExtension = project.extensions.findByType(JavaPluginExtension)
+    def sourceSets
+    if (javaExtension != null) {
+      sourceSets = javaExtension.sourceSets
+    } else if (project.extensions.findByType(SourceSetContainer)) {
+      sourceSets = project.extensions.getByType(SourceSetContainer)
+    } else {
+      throw new GradleException('Forbiddenapis requires the Java plugin, but no Java source sets were found on ' + project.path)
+    }
+
+    // Gradle is buggy with it's JavaVersion enum: We use majorVersion property before Java 11 (6,7,8,9,10) and for later we use toString() to be future-proof:
+    Closure targetCompatibilityGetter = { (javaExtension.targetCompatibility?.hasProperty('java11Compatible') && javaExtension.targetCompatibility?.java11Compatible) ?
+        javaExtension.targetCompatibility.toString() : javaExtension.targetCompatibility?.majorVersion };
+
+    // Define our tasks (one for each SourceSet):
+    sourceSets.all{ sourceSet ->
+      String sourceSetTaskName = sourceSet.getTaskName(FORBIDDEN_APIS_TASK_NAME, null);
+      def sourceSetTask = TASK_AVOIDANCE_AVAILABLE ? project.tasks.register(sourceSetTaskName, CheckForbiddenApis.class) :
+              project.tasks.create(sourceSetTaskName, CheckForbiddenApis.class);
+      def templateClassesDirs = project.files();
+      def templateClasspath = project.files();
+      sourceSetTask.configure {
+        description = "Runs forbidden-apis checks on '${sourceSet.name}' classes.";
+        dependsOn(sourceSet.output);
+        outputs.upToDateWhen { true }
+        def taskData = internalTaskData()
+        conventionMapping.with{
+          FORBIDDEN_APIS_EXTENSION_PROPS.each{ key ->
+            map(key, { 
+              def item = taskData[key]
+              if (item instanceof ConfigurableFileCollection) {
+                return item.from(extension[key])
+              } else if (item instanceof Collection) {
+                item.addAll(extension[key])
+                return item
+              }
+              return extension[key]
+            })
+          }
+          classesDirs = { templateClassesDirs.from(sourceSet.output.hasProperty('classesDirs') ? sourceSet.output.classesDirs : sourceSet.output.classesDir) }
+          classpath = { templateClasspath.from(sourceSet.compileClasspath) }
+          targetCompatibility = targetCompatibilityGetter
+        }
+      }
+      forbiddenTask.configure {
+        dependsOn(sourceSetTask)
+      }
+    }
+
+    // Add our task as dependency to chain
+    def checkTask = TASK_AVOIDANCE_AVAILABLE ? project.tasks.named(JavaBasePlugin.CHECK_TASK_NAME) : project.tasks.getByName(JavaBasePlugin.CHECK_TASK_NAME);
+    checkTask.configure { it.dependsOn(forbiddenTask) };
+  }
+  
+}
