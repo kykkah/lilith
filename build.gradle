@@ -100,6 +100,16 @@ subprojects { proj ->
         options.release = 17
     }
 
+    tasks.named('compileTestJava').configure {
+        // The build does not use annotation processors for tests, yet Gradle eagerly
+        // wires a generated-sources directory for them. When the directory stays
+        // empty the Java compiler emits
+        //   "Source root: .../build/generated/sources/annotationProcessor/java/test is not on its sourcepath"
+        // by switching off processing we prevent the directory from being created in
+        // the first place, eliminating the warning without altering compilation.
+        options.compilerArgs += '-proc:none'
+    }
+
     checkstyle {
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         configProperties = [
