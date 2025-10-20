@@ -29,9 +29,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.stream.XMLStreamException;
 
+/**
+ * Exposes Lilith XML stream event producers via a server socket.
+ */
 public class LilithXmlStreamLoggingServerSocketEventSourceProducer
 	extends AbstractServerSocketEventSourceProducer<LoggingEvent>
 {
+	/**
+	 * Creates a server socket source producer that reads zero-delimited XML streams.
+	 *
+	 * @param port port the server socket listens on
+	 * @throws IOException if the server socket cannot be opened
+	 */
 	public LilithXmlStreamLoggingServerSocketEventSourceProducer(int port)
 		throws IOException
 	{

@@ -27,9 +27,20 @@ import de.huxhorn.lilith.engine.impl.eventproducer.MessageBasedEventProducer;
 import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.InputStream;
 
+/**
+ * Decodes Lilith XML messages from a framed stream and turns them into {@link LoggingEvent}s.
+ */
 public class LilithXmlMessageLoggingEventProducer
 	extends MessageBasedEventProducer<LoggingEvent>
 {
+	/**
+	 * Creates a new producer that reads zero-delimited Lilith XML messages.
+	 *
+	 * @param sourceIdentifier identifier describing the originating source
+	 * @param eventQueue       queue that receives decoded events
+	 * @param inputStream      stream providing encoded messages
+	 * @param compressing      {@code true} if the payload is compressed
+	 */
 	public LilithXmlMessageLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream, boolean compressing)
 	{
 		super(sourceIdentifier, eventQueue, new LoggingEventSourceIdentifierUpdater(), new LoggingXmlCodec(compressing), inputStream, false);

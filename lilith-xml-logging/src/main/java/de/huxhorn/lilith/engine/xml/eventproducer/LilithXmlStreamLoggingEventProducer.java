@@ -38,6 +38,9 @@ import javax.xml.stream.XMLStreamReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Parses a zero-delimited stream of Lilith XML logging events and appends them to the event queue.
+ */
 public class LilithXmlStreamLoggingEventProducer
 	extends AbstractEventProducer<LoggingEvent>
 	implements LoggingEventSchemaConstants
@@ -58,6 +61,14 @@ public class LilithXmlStreamLoggingEventProducer
 	private final LoggingEventReader loggingEventReader;
 	private final BufferedInputStream inputStream;
 
+	/**
+	 * Creates a streaming producer that decodes Lilith XML events from an input stream.
+	 *
+	 * @param sourceIdentifier identifier describing the originating source
+	 * @param eventQueue       queue that receives decoded events
+	 * @param inputStream      input providing zero-delimited XML fragments
+	 * @throws XMLStreamException if the XML parser cannot be configured
+	 */
 	public LilithXmlStreamLoggingEventProducer(SourceIdentifier sourceIdentifier, AppendOperation<EventWrapper<LoggingEvent>> eventQueue, InputStream inputStream)
 		throws XMLStreamException
 	{

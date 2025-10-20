@@ -28,11 +28,21 @@ import de.huxhorn.sulky.buffers.AppendOperation;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Accepts socket connections that deliver Lilith XML message events and forwards them to listeners.
+ */
 public class LilithXmlMessageLoggingServerSocketEventSourceProducer
 	extends AbstractServerSocketEventSourceProducer<LoggingEvent>
 {
 	private final boolean compressing;
 
+	/**
+	 * Creates a server socket source producer that emits XML message based logging events.
+	 *
+	 * @param port        port the server socket listens on
+	 * @param compressing {@code true} if incoming payloads are compressed
+	 * @throws IOException if the server socket cannot be opened
+	 */
 	public LilithXmlMessageLoggingServerSocketEventSourceProducer(int port, boolean compressing)
 		throws IOException
 	{

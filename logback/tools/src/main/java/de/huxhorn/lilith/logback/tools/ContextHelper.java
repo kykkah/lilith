@@ -38,12 +38,16 @@ import ch.qos.logback.core.Context;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+/**
+ * Reflection-driven helper that accesses Logback status utilities if they are available.
+ */
 public final class ContextHelper
 {
 	private static final Constructor<?> UTIL_CTOR;
 	private static final Method TIME_OF_LAST_RESET_METHOD;
 	private static final Method GET_HIGHEST_LEVEL_METHOD;
 
+	/** Sentinel value returned when the status information cannot be retrieved. */
 	public static final int FAIL = -17;
 
 	private ContextHelper() {}
@@ -133,6 +137,12 @@ public final class ContextHelper
 		return result;
 	}
 
+	/**
+	 * Returns the timestamp of the last status reset or {@link #FAIL} if unavailable.
+	 *
+	 * @param context Logback context to query
+	 * @return reset time in milliseconds or {@link #FAIL}
+	 */
 	public static long getTimeOfLastReset(Context context)
 	{
 		long result = FAIL;
