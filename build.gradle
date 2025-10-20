@@ -130,6 +130,7 @@ subprojects { proj ->
     }
 
     tasks.withType(Javadoc).configureEach { Javadoc j ->
+        j.exclude("**/generated/**") // proto outputs live under generated/; skip them to silence doclint on generated files
         if (JavaVersion.current().isJava10Compatible()) {
             j.options.optionFiles << rootProject.file('config/javadoc10.options')
         } else {

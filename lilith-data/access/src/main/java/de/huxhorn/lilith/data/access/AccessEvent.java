@@ -38,183 +38,362 @@ import de.huxhorn.lilith.data.eventsource.LoggerContext;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * Captures the details of a single HTTP access event produced by the Lilith agent.
+ */
 public class AccessEvent
 	implements Serializable
 {
 	private static final long serialVersionUID = -942687545417047646L;
 
+	/** Timestamp of the access event in milliseconds since the epoch. */
 	private Long timeStamp;
+	/** Time spent processing the request in milliseconds. */
 	private Long elapsedTime;
+	/** Logger context originating the event. */
 	private LoggerContext loggerContext;
+	/** Request URI (without scheme or host). */
 	private String requestURI;
+	/** Full request URL. */
 	private String requestURL;
+	/** Client host name if resolvable. */
 	private String remoteHost;
+	/** Authenticated remote user. */
 	private String remoteUser;
+	/** Protocol string, e.g. {@code HTTP/1.1}. */
 	private String protocol;
+	/** HTTP method used by the client. */
 	private String method;
+	/** Server host name handling the request. */
 	private String serverName;
+	/** Client IP address. */
 	private String remoteAddress;
+	/** Captured request headers. */
 	private Map<String, String> requestHeaders;
+	/** Captured response headers. */
 	private Map<String, String> responseHeaders;
+	/** Captured request parameters. */
 	private Map<String, String[]> requestParameters;
+	/** Local port accepting the connection. */
 	private int localPort;
+	/** HTTP response status code. */
 	private int statusCode;
 
+	/**
+	 * Returns the event timestamp.
+	 *
+	 * @return the timestamp in milliseconds since the epoch or {@code null} if unknown
+	 */
 	public Long getTimeStamp()
 	{
 		return timeStamp;
 	}
 
+	/**
+	 * Sets the event timestamp.
+	 *
+	 * @param timeStamp the timestamp in milliseconds since the epoch
+	 */
 	public void setTimeStamp(Long timeStamp)
 	{
 		this.timeStamp = timeStamp;
 	}
 
+	/**
+	 * Returns the request processing time.
+	 *
+	 * @return the elapsed time in milliseconds or {@code null} if not measured
+	 */
 	public Long getElapsedTime()
 	{
 		return elapsedTime;
 	}
 
+	/**
+	 * Sets the request processing time.
+	 *
+	 * @param elapsedTime the elapsed time in milliseconds
+	 */
 	public void setElapsedTime(Long elapsedTime)
 	{
 		this.elapsedTime = elapsedTime;
 	}
 
+	/**
+	 * Returns the logger context that generated the event.
+	 *
+	 * @return the logger context or {@code null} if not available
+	 */
 	public LoggerContext getLoggerContext()
 	{
 		return loggerContext;
 	}
 
+	/**
+	 * Associates the event with the given logger context.
+	 *
+	 * @param loggerContext the logger context to store
+	 */
 	public void setLoggerContext(LoggerContext loggerContext)
 	{
 		this.loggerContext = loggerContext;
 	}
 
+	/**
+	 * Returns the request URI (no scheme/host).
+	 *
+	 * @return the request URI or {@code null}
+	 */
 	public String getRequestURI()
 	{
 		return requestURI;
 	}
 
+	/**
+	 * Sets the request URI (no scheme/host).
+	 *
+	 * @param requestURI the request URI
+	 */
 	public void setRequestURI(String requestURI)
 	{
 		this.requestURI = requestURI;
 	}
 
+	/**
+	 * Returns the full request URL.
+	 *
+	 * @return the request URL or {@code null}
+	 */
 	public String getRequestURL()
 	{
 		return requestURL;
 	}
 
+	/**
+	 * Sets the full request URL.
+	 *
+	 * @param requestURL the request URL
+	 */
 	public void setRequestURL(String requestURL)
 	{
 		this.requestURL = requestURL;
 	}
 
+	/**
+	 * Returns the remote host name.
+	 *
+	 * @return the remote host or {@code null}
+	 */
 	public String getRemoteHost()
 	{
 		return remoteHost;
 	}
 
+	/**
+	 * Sets the remote host name.
+	 *
+	 * @param remoteHost the remote host
+	 */
 	public void setRemoteHost(String remoteHost)
 	{
 		this.remoteHost = remoteHost;
 	}
 
+	/**
+	 * Returns the authenticated remote user.
+	 *
+	 * @return the remote user or {@code null}
+	 */
 	public String getRemoteUser()
 	{
 		return remoteUser;
 	}
 
+	/**
+	 * Sets the authenticated remote user.
+	 *
+	 * @param remoteUser the remote user name
+	 */
 	public void setRemoteUser(String remoteUser)
 	{
 		this.remoteUser = remoteUser;
 	}
 
+	/**
+	 * Returns the protocol of the request.
+	 *
+	 * @return the protocol (e.g. {@code HTTP/1.1}) or {@code null}
+	 */
 	public String getProtocol()
 	{
 		return protocol;
 	}
 
+	/**
+	 * Sets the protocol of the request.
+	 *
+	 * @param protocol the protocol string
+	 */
 	public void setProtocol(String protocol)
 	{
 		this.protocol = protocol;
 	}
 
+	/**
+	 * Returns the HTTP method of the request.
+	 *
+	 * @return the method or {@code null}
+	 */
 	public String getMethod()
 	{
 		return method;
 	}
 
+	/**
+	 * Sets the HTTP method of the request.
+	 *
+	 * @param method the method string
+	 */
 	public void setMethod(String method)
 	{
 		this.method = method;
 	}
 
+	/**
+	 * Returns the server name that handled the request.
+	 *
+	 * @return the server name or {@code null}
+	 */
 	public String getServerName()
 	{
 		return serverName;
 	}
 
+	/**
+	 * Sets the server name that handled the request.
+	 *
+	 * @param serverName the server name
+	 */
 	public void setServerName(String serverName)
 	{
 		this.serverName = serverName;
 	}
 
+	/**
+	 * Returns the remote IP address.
+	 *
+	 * @return the remote address or {@code null}
+	 */
 	public String getRemoteAddress()
 	{
 		return remoteAddress;
 	}
 
+	/**
+	 * Sets the remote IP address.
+	 *
+	 * @param remoteAddress the remote address
+	 */
 	public void setRemoteAddress(String remoteAddress)
 	{
 		this.remoteAddress = remoteAddress;
 	}
 
+	/**
+	 * Returns the captured request headers.
+	 *
+	 * @return a map of request headers or {@code null}
+	 */
 	public Map<String, String> getRequestHeaders()
 	{
 		return requestHeaders;
 	}
 
+	/**
+	 * Sets the captured request headers.
+	 *
+	 * @param requestHeaders the request headers to store
+	 */
 	public void setRequestHeaders(Map<String, String> requestHeaders)
 	{
 		this.requestHeaders = requestHeaders;
 	}
 
+	/**
+	 * Returns the captured response headers.
+	 *
+	 * @return a map of response headers or {@code null}
+	 */
 	public Map<String, String> getResponseHeaders()
 	{
 		return responseHeaders;
 	}
 
+	/**
+	 * Sets the captured response headers.
+	 *
+	 * @param responseHeaders the response headers to store
+	 */
 	public void setResponseHeaders(Map<String, String> responseHeaders)
 	{
 		this.responseHeaders = responseHeaders;
 	}
 
+	/**
+	 * Returns the captured request parameters.
+	 *
+	 * @return a map of request parameters or {@code null}
+	 */
 	public Map<String, String[]> getRequestParameters()
 	{
 		return requestParameters;
 	}
 
+	/**
+	 * Sets the captured request parameters.
+	 *
+	 * @param requestParameters the request parameters to store
+	 */
 	public void setRequestParameters(Map<String, String[]> requestParameters)
 	{
 		this.requestParameters = requestParameters;
 	}
 
+	/**
+	 * Returns the local port that accepted the request.
+	 *
+	 * @return the local port number
+	 */
 	public int getLocalPort()
 	{
 		return localPort;
 	}
 
+	/**
+	 * Sets the local port that accepted the request.
+	 *
+	 * @param localPort the local port number
+	 */
 	public void setLocalPort(int localPort)
 	{
 		this.localPort = localPort;
 	}
 
+	/**
+	 * Returns the HTTP response status code.
+	 *
+	 * @return the response status code
+	 */
 	public int getStatusCode()
 	{
 		return statusCode;
 	}
 
+	/**
+	 * Sets the HTTP response status code.
+	 *
+	 * @param statusCode the response status code
+	 */
 	public void setStatusCode(int statusCode)
 	{
 		this.statusCode = statusCode;

@@ -36,6 +36,9 @@ package de.huxhorn.lilith.data.logging;
 
 import java.io.Serializable;
 
+/**
+ * Serializable snapshot of thread metadata captured alongside a logging event.
+ */
 public class ThreadInfo
 	implements Serializable, Cloneable
 {
@@ -47,11 +50,22 @@ public class ThreadInfo
 	private String groupName;
 	private Integer priority;
 
+	/**
+	 * Creates an empty thread information instance.
+	 */
 	public ThreadInfo()
 	{
 		this(null, null, null, null);
 	}
 
+	/**
+	 * Creates a thread information instance with the supplied values.
+	 *
+	 * @param id        thread identifier
+	 * @param name      thread name
+	 * @param groupId   identifier of the thread group
+	 * @param groupName name of the thread group
+	 */
 	public ThreadInfo(Long id, String name, Long groupId, String groupName)
 	{
 		this.id = id;
@@ -60,56 +74,107 @@ public class ThreadInfo
 		this.groupName = groupName;
 	}
 
+	/**
+	 * Returns the thread identifier.
+	 *
+	 * @return thread identifier or {@code null} if unknown
+	 */
 	public Long getId()
 	{
 		return id;
 	}
 
+	/**
+	 * Sets the thread identifier.
+	 *
+	 * @param id thread identifier to store
+	 */
 	public void setId(Long id)
 	{
 		this.id = id;
 	}
 
+	/**
+	 * Returns the thread name.
+	 *
+	 * @return thread name or {@code null} if not captured
+	 */
 	public String getName()
 	{
 		return name;
 	}
 
+	/**
+	 * Sets the thread name.
+	 *
+	 * @param name thread name to store
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
+	/**
+	 * Returns the identifier of the thread group.
+	 *
+	 * @return thread group identifier or {@code null}
+	 */
 	public Long getGroupId()
 	{
 		return groupId;
 	}
 
+	/**
+	 * Sets the identifier of the thread group.
+	 *
+	 * @param groupId thread group identifier to store
+	 */
 	public void setGroupId(Long groupId)
 	{
 		this.groupId = groupId;
 	}
 
+	/**
+	 * Returns the name of the thread group.
+	 *
+	 * @return thread group name or {@code null}
+	 */
 	public String getGroupName()
 	{
 		return groupName;
 	}
 
+	/**
+	 * Sets the name of the thread group.
+	 *
+	 * @param groupName thread group name to store
+	 */
 	public void setGroupName(String groupName)
 	{
 		this.groupName = groupName;
 	}
 
+	/**
+	 * Returns the thread priority.
+	 *
+	 * @return thread priority or {@code null} if not captured
+	 */
 	public Integer getPriority()
 	{
 		return priority;
 	}
 
+	/**
+	 * Sets the thread priority.
+	 *
+	 * @param priority thread priority to store
+	 */
 	public void setPriority(Integer priority)
 	{
 		this.priority = priority;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object o)
 	{
@@ -125,6 +190,7 @@ public class ThreadInfo
 		return priority != null ? priority.equals(that.priority) : that.priority == null;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode()
 	{
@@ -136,6 +202,7 @@ public class ThreadInfo
 		return result;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public ThreadInfo clone()
 		throws CloneNotSupportedException
@@ -143,6 +210,7 @@ public class ThreadInfo
 		return (ThreadInfo) super.clone();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString()
 	{

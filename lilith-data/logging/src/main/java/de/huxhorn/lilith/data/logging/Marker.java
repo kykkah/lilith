@@ -40,6 +40,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Lightweight marker implementation compatible with slf4j marker semantics.
+ */
 public final class Marker
 	implements Serializable
 {
@@ -48,17 +51,30 @@ public final class Marker
 	private String name;
 	private Map<String, Marker> references;
 
-	public Marker()
-	{
-		this("Marker");
-	}
+    /**
+     * Creates a marker with the default name.
+     */
+    public Marker()
+    {
+        this("Marker");
+    }
 
-	public Marker(String name)
-	{
-		setName(name);
-	}
+    /**
+     * Creates a marker with the specified name.
+     *
+     * @param name marker name; must not be {@code null}
+     */
+    public Marker(String name)
+    {
+        setName(name);
+    }
 
-	public void setName(String name)
+    /**
+     * Updates the marker name.
+     *
+     * @param name marker name; must not be {@code null}
+     */
+    public void setName(String name)
 	{
 		if(name == null)
 		{
@@ -67,33 +83,53 @@ public final class Marker
 		this.name = name;
 	}
 
-	public String getName()
-	{
-		return name;
-	}
+    /**
+     * Returns the marker name.
+     *
+     * @return marker name
+     */
+    public String getName()
+    {
+        return name;
+    }
 
-	public Map<String, Marker> getReferences()
-	{
-		if(references == null)
-		{
-			return null;
-		}
-		return new HashMap<>(references);
-	}
+    /**
+     * Returns the referenced child markers.
+     *
+     * @return map of referenced markers or {@code null} if none exist
+     */
+    public Map<String, Marker> getReferences()
+    {
+        if(references == null)
+        {
+            return null;
+        }
+        return new HashMap<>(references);
+    }
 
-	public void remove(Marker marker)
-	{
-		if(references != null)
-		{
-			references.remove(marker.getName());
-		}
-	}
+    /**
+     * Removes the given marker from the referenced children.
+     *
+     * @param marker marker to remove
+     */
+    public void remove(Marker marker)
+    {
+        if(references != null)
+        {
+            references.remove(marker.getName());
+        }
+    }
 
-	public void add(Marker marker)
-	{
-		if(references == null)
-		{
-			references = new HashMap<>();
+    /**
+     * Adds the given marker as a referenced child if it is not present yet.
+     *
+     * @param marker marker to add
+     */
+    public void add(Marker marker)
+    {
+        if(references == null)
+        {
+            references = new HashMap<>();
 		}
 		if(!references.containsKey(marker.getName()))
 		{
@@ -101,17 +137,33 @@ public final class Marker
 		}
 	}
 
-	public void setReferences(Map<String, Marker> references)
-	{
-		this.references = references;
-	}
+    /**
+     * Replaces the referenced child markers.
+     *
+     * @param references new reference map
+     */
+    public void setReferences(Map<String, Marker> references)
+    {
+        this.references = references;
+    }
 
-	public boolean hasReferences()
-	{
-		return references != null && !references.isEmpty();
-	}
+    /**
+     * Returns whether this marker contains any referenced children.
+     *
+     * @return {@code true} if referenced markers are present
+     */
+    public boolean hasReferences()
+    {
+        return references != null && !references.isEmpty();
+    }
 
-	public boolean contains(Marker other)
+    /**
+     * Determines whether this marker references the supplied marker, directly or transitively.
+     *
+     * @param other marker to look for
+     * @return {@code true} if the marker is referenced or identical
+     */
+    public boolean contains(Marker other)
 	{
 		if(other == null)
 		{
@@ -132,7 +184,13 @@ public final class Marker
 		return false;
 	}
 
-	public boolean contains(String name)
+    /**
+     * Determines whether this marker references a marker with the given name.
+     *
+     * @param name marker name to look for
+     * @return {@code true} if the marker name is referenced or identical
+     */
+    public boolean contains(String name)
 	{
 		if(name == null)
 		{
@@ -151,7 +209,12 @@ public final class Marker
 		return false;
 	}
 
-	public Set<String> collectMarkerNames()
+    /**
+     * Returns all marker names reachable from this marker, including itself.
+     *
+     * @return set of marker names
+     */
+    public Set<String> collectMarkerNames()
 	{
 		return collectMarkerNames(this, null);
 	}
@@ -181,6 +244,7 @@ public final class Marker
 		return collectedMarkerNames;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object o)
 	{
@@ -192,6 +256,7 @@ public final class Marker
 		return !(name != null ? !name.equals(marker.name) : marker.name != null);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode()
 	{

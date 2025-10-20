@@ -49,9 +49,12 @@ public class ExtendedStackTraceElement
 {
 	private static final long serialVersionUID = -6954579590347369344L;
 
+	/** Shared empty array instance to avoid repeated allocations. */
 	public static final ExtendedStackTraceElement[] ARRAY_PROTOTYPE = new ExtendedStackTraceElement[0];
 
+	/** Sentinel used when the source line number is unknown. */
 	public static final int UNKNOWN_SOURCE_LINE_NUMBER = -1;
+	/** Sentinel indicating that the method is implemented natively. */
 	public static final int NATIVE_METHOD_LINE_NUMBER = -2;
 
 	private static final String NATIVE_METHOD_STRING = "Native Method";
@@ -136,26 +139,44 @@ public class ExtendedStackTraceElement
 		}
 	}
 
+	/** Fully qualified class name. */
 	private String className;
+	/** Method name within the declaring class. */
 	private String methodName;
+	/** Source file that contains the method. */
 	private String fileName;
+	/** Source line number or sentinel value. */
 	private int lineNumber;
 
 	// Logback extended info
+	/** Location (usually the jar) where the class was loaded from. */
 	private String codeLocation;
+	/** Version identifier reported by the logging framework. */
 	private String version;
+	/** Indicates whether the location information is exact. */
 	private boolean exact;
 
 	// Java 9
+	/** Name of the class loader that loaded the class. */
 	private String classLoaderName;
+	/** Module name reported by the JVM. */
 	private String moduleName;
+	/** Module version reported by the JVM. */
 	private String moduleVersion;
 
+	/**
+	 * Creates an empty stack trace element with an unknown source line number.
+	 */
 	public ExtendedStackTraceElement()
 	{
 		lineNumber = UNKNOWN_SOURCE_LINE_NUMBER;
 	}
 
+	/**
+	 * Creates an instance initialized from the given {@link StackTraceElement}.
+	 *
+	 * @param stackTraceElement the JDK stack trace element to copy
+	 */
 	public ExtendedStackTraceElement(StackTraceElement stackTraceElement)
 	{
 		Objects.requireNonNull(stackTraceElement, "stackTraceElement must not be null!");
@@ -168,11 +189,30 @@ public class ExtendedStackTraceElement
 		this.moduleVersion= getModuleVersionFrom(stackTraceElement);
 	}
 
+	/**
+	 * Creates an instance using the standard stack trace attributes.
+	 *
+	 * @param className  the declaring class name
+	 * @param methodName the method name
+	 * @param fileName   the source file name
+	 * @param lineNumber the source line number
+	 */
 	public ExtendedStackTraceElement(String className, String methodName, String fileName, int lineNumber)
 	{
 		this(className, methodName, fileName, lineNumber, null, null, false);
 	}
 
+	/**
+	 * Creates an instance with extended location information.
+	 *
+	 * @param className    the declaring class name
+	 * @param methodName   the method name
+	 * @param fileName     the source file name
+	 * @param lineNumber   the source line number
+	 * @param codeLocation the code location (usually the jar file)
+	 * @param version      the code version
+	 * @param exact        whether the location is exact
+	 */
 	public ExtendedStackTraceElement(String className, String methodName, String fileName, int lineNumber, String codeLocation, String version, boolean exact)
 	{
 		this.className = className;
@@ -184,107 +224,212 @@ public class ExtendedStackTraceElement
 		this.exact = exact;
 	}
 
+	/**
+	 * Returns whether this stack trace element represents a native method.
+	 *
+	 * @return {@code true} if the element points to a native method
+	 */
 	@SuppressWarnings("WeakerAccess")
 	public boolean isNativeMethod()
 	{
 		return lineNumber == NATIVE_METHOD_LINE_NUMBER;
 	}
 
+	/**
+	 * Returns the declaring class name.
+	 *
+	 * @return the fully qualified class name or {@code null} if unset
+	 */
 	public String getClassName()
 	{
 		return className;
 	}
 
+	/**
+	 * Sets the declaring class name.
+	 *
+	 * @param className the fully qualified class name
+	 */
 	public void setClassName(String className)
 	{
 		this.className = className;
 	}
 
+	/**
+	 * Returns the method name.
+	 *
+	 * @return the method name or {@code null} if unset
+	 */
 	public String getMethodName()
 	{
 		return methodName;
 	}
 
+	/**
+	 * Sets the method name.
+	 *
+	 * @param methodName the method name
+	 */
 	public void setMethodName(String methodName)
 	{
 		this.methodName = methodName;
 	}
 
+	/**
+	 * Returns the source file name.
+	 *
+	 * @return the source file name or {@code null} if not available
+	 */
 	public String getFileName()
 	{
 		return fileName;
 	}
 
+	/**
+	 * Sets the source file name.
+	 *
+	 * @param fileName the source file name
+	 */
 	public void setFileName(String fileName)
 	{
 		this.fileName = fileName;
 	}
 
+	/**
+	 * Returns the source line number.
+	 *
+	 * @return the line number or one of the {@code *_LINE_NUMBER} constants
+	 */
 	public int getLineNumber()
 	{
 		return lineNumber;
 	}
 
+	/**
+	 * Sets the source line number.
+	 *
+	 * @param lineNumber the line number or one of the {@code *_LINE_NUMBER} constants
+	 */
 	public void setLineNumber(int lineNumber)
 	{
 		this.lineNumber = lineNumber;
 	}
 
+	/**
+	 * Returns the code location (usually the jar file).
+	 *
+	 * @return the code location or {@code null} if unknown
+	 */
 	public String getCodeLocation()
 	{
 		return codeLocation;
 	}
 
+	/**
+	 * Sets the code location associated with the element.
+	 *
+	 * @param codeLocation the code location string
+	 */
 	public void setCodeLocation(String codeLocation)
 	{
 		this.codeLocation = codeLocation;
 	}
 
+	/**
+	 * Returns the version of the code location.
+	 *
+	 * @return the version string or {@code null} if not provided
+	 */
 	public String getVersion()
 	{
 		return version;
 	}
 
+	/**
+	 * Sets the version of the code location.
+	 *
+	 * @param version the version string
+	 */
 	public void setVersion(String version)
 	{
 		this.version = version;
 	}
 
+	/**
+	 * Indicates whether the location information is exact.
+	 *
+	 * @return {@code true} if the location is exact, {@code false} otherwise
+	 */
 	public boolean isExact()
 	{
 		return exact;
 	}
 
+	/**
+	 * Sets whether the location information is exact.
+	 *
+	 * @param exact {@code true} if the location is exact
+	 */
 	public void setExact(boolean exact)
 	{
 		this.exact = exact;
 	}
 
+	/**
+	 * Returns the originating class loader name.
+	 *
+	 * @return the class loader name or {@code null} for legacy JDKs
+	 */
 	public String getClassLoaderName()
 	{
 		return classLoaderName;
 	}
 
+	/**
+	 * Sets the originating class loader name.
+	 *
+	 * @param classLoaderName the class loader name
+	 */
 	public void setClassLoaderName(String classLoaderName)
 	{
 		this.classLoaderName = classLoaderName;
 	}
 
+	/**
+	 * Returns the module name reported by the JVM.
+	 *
+	 * @return the module name or {@code null} if not available
+	 */
 	public String getModuleName()
 	{
 		return moduleName;
 	}
 
+	/**
+	 * Sets the module name reported by the JVM.
+	 *
+	 * @param moduleName the module name
+	 */
 	public void setModuleName(String moduleName)
 	{
 		this.moduleName = moduleName;
 	}
 
+	/**
+	 * Returns the module version reported by the JVM.
+	 *
+	 * @return the module version or {@code null} if not available
+	 */
 	public String getModuleVersion()
 	{
 		return moduleVersion;
 	}
 
+	/**
+	 * Sets the module version reported by the JVM.
+	 *
+	 * @param moduleVersion the module version
+	 */
 	public void setModuleVersion(String moduleVersion)
 	{
 		this.moduleVersion = moduleVersion;
@@ -346,6 +491,11 @@ public class ExtendedStackTraceElement
 		return (ExtendedStackTraceElement) super.clone();
 	}
 
+	/**
+	 * Returns the extended location information in the format used by logback.
+	 *
+	 * @return the extended location string or {@code null} if no extended data is present
+	 */
 	public String getExtendedString()
 	{
 		if(codeLocation != null || version != null)
@@ -472,9 +622,12 @@ public class ExtendedStackTraceElement
 		}
 		return stringBuilder;
 	}
-
-
-
+	/**
+	 * Parses a stack trace element string created by {@link Throwable#printStackTrace()}.
+	 *
+	 * @param ste the string representation of a stack trace element
+	 * @return the parsed {@link ExtendedStackTraceElement} or {@code null} if the input cannot be parsed
+	 */
 	public static ExtendedStackTraceElement parseStackTraceElement(final String ste)
 	{
 		if(ste == null)

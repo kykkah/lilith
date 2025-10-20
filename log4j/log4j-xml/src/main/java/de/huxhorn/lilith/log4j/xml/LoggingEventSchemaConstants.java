@@ -34,6 +34,13 @@
 
 package de.huxhorn.lilith.log4j.xml;
 
+/**
+ * XML element and attribute names recognised by the Lilith Log4j XML schema.
+ *
+ * <p>The constants mirror the structure defined in {@code LoggingEvent.xsd} and are shared between serializers
+ * and deserializers.</p>
+ */
+@SuppressWarnings("doclint:missing")
 public interface LoggingEventSchemaConstants
 {
 	/*
@@ -56,34 +63,56 @@ Caused by: java.lang.RuntimeException: Hi.
 </log4j:event>
 
 	 */
+	/** Default namespace prefix 'log4j'. */
 	String DEFAULT_NAMESPACE_PREFIX = "log4j";
+	/** Namespace URI 'http://jakarta.apache.org/log4j/'. */
 	String NAMESPACE_URI = "http://jakarta.apache.org/log4j/";
 
 
+	/** XML element name 'event'. */
 	String LOGGING_EVENT_NODE = "event";
 
+	/** XML attribute name 'logger'. */
 	String LOGGER_ATTRIBUTE = "logger";
+	/** XML attribute name 'timestamp'. */
 	String TIMESTAMP_ATTRIBUTE = "timestamp";
+	/** XML attribute name 'level'. */
 	String LEVEL_ATTRIBUTE = "level";
+	/** XML attribute name 'thread'. */
 	String THREAD_NAME_ATTRIBUTE = "thread";
+	/** XML attribute name 'threadId'. */
 	String THREAD_ID_ATTRIBUTE = "threadId";
+	/** XML attribute name 'threadGroup'. */
 	String THREAD_GROUP_NAME_ATTRIBUTE = "threadGroup";
+	/** XML attribute name 'threadGroupId'. */
 	String THREAD_GROUP_ID_ATTRIBUTE = "threadGroupId";
 
+	/** XML element name 'message'. */
 	String MESSAGE_NODE = "message";
+	/** XML element name 'NDC'. */
 	String NDC_NODE = "NDC";
 
+	/** XML element name 'throwable'. */
 	String THROWABLE_NODE = "throwable";
 
+	/** XML element name 'locationInfo'. */
 	String LOCATION_INFO_NODE = "locationInfo";
 
+	/** XML attribute name 'class'. */
 	String CLASS_ATTRIBUTE = "class";
+	/** XML attribute name 'method'. */
 	String METHOD_ATTRIBUTE = "method";
+	/** XML attribute name 'file'. */
 	String FILE_ATTRIBUTE = "file";
+	/** XML attribute name 'line'. */
 	String LINE_ATTRIBUTE = "line";
 
+	/** XML element name 'properties'. */
 	String PROPERTIES_NODE = "properties";
+	/** XML element name 'data'. */
 	String DATA_NODE = "data";
+	/** XML attribute name 'name'. */
 	String NAME_ATTRIBUTE = "name";
+	/** XML attribute name 'value'. */
 	String VALUE_ATTRIBUTE = "value";
 }

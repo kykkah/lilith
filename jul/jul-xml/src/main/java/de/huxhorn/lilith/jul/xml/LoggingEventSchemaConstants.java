@@ -34,6 +34,12 @@
 
 package de.huxhorn.lilith.jul.xml;
 
+/**
+ * XML element and attribute names used within the JUL logging event schema.
+ *
+ * <p>The constants mirror the schema definition so JUL encoders and decoders stay aligned.</p>
+ */
+@SuppressWarnings("doclint:missing")
 public interface LoggingEventSchemaConstants
 {
 	/*
@@ -112,24 +118,41 @@ public interface LoggingEventSchemaConstants
 	String DEFAULT_NAMESPACE_PREFIX = null;
 	String NAMESPACE_URI = null;
 
+	/** XML element name 'log'. */
 	String LOG_NODE = "log";
 
+	/** XML element name 'record'. */
 	String RECORD_NODE = "record";
+	/** XML element name 'date'. */
 	String DATE_NODE = "date";
+	/** XML element name 'millis'. */
 	String MILLIS_NODE = "millis";
+	/** XML element name 'sequence'. */
 	String SEQUENCE_NODE = "sequence";
+	/** XML element name 'logger'. */
 	String LOGGER_NODE = "logger";
+	/** XML element name 'level'. */
 	String LEVEL_NODE = "level";
+	/** XML element name 'class'. */
 	String CLASS_NODE = "class";
+	/** XML element name 'method'. */
 	String METHOD_NODE = "method";
+	/** XML element name 'thread'. */
 	String THREAD_NODE = "thread";
+	/** XML element name 'message'. */
 	String MESSAGE_NODE = "message";
 
+	/** XML element name 'key'. */
 	String KEY_NODE = "key";
+	/** XML element name 'catalog'. */
 	String CATALOG_NODE = "catalog";
+	/** XML element name 'param'. */
 	String PARAM_NODE = "param";
 
+	/** XML element name 'exception'. */
 	String EXCEPTION_NODE = "exception";
+	/** XML element name 'frame'. */
 	String FRAME_NODE = "frame";
+	/** XML element name 'line'. */
 	String LINE_NODE = "line";
 }

@@ -85,9 +85,12 @@ public final class AboutPanel
 
 	private final Logger logger = LoggerFactory.getLogger(AboutPanel.class);
 
+	/** Resource key 'background.png'. */
 	public static final String BACKGROUND_IMAGE_RESOURCE = "background.png";
+	/** Resource key 'about.png'. */
 	public static final String ABOUT_IMAGE_RESOURCE = "about.png";
 
+	/** Resource key 'about.'. */
 	public static final String TEXT_RESOURCE_PREFIX = "about.";
 
 	public static final String SCROLL_TEXT_RESOURCE =
@@ -110,11 +113,16 @@ public final class AboutPanel
 		SCROLL_AREA_RESOURCE_BASE + "tooltip.text";
 
 
+	/** Resource key 'TextResources'. */
 	public static final String TEXT_RESOURCE_BUNDLE_RESOURCE = "TextResources";
 
+	/** Mouse handling mode flag for disabling reactions. */
 	public static final int MOUSE_DISABLED = 0;
+	/** Mouse handling mode flag that forwards events to the component. */
 	public static final int MOUSE_COMPONENT = 1;
+	/** Mouse handling mode flag that only reacts within the scroll area. */
 	public static final int MOUSE_SCROLLAREA = 2;
+	/** Mouse handling mode flag that reacts on the background. */
 	public static final int MOUSE_BACKGROUND = 3;
 
 	//private static final int SCROLL_SLEEP_TIME = 50;

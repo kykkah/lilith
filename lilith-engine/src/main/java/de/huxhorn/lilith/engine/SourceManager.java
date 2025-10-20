@@ -21,6 +21,9 @@ import de.huxhorn.lilith.data.eventsource.SourceIdentifier;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Coordinates event sources and dispatches new events to registered handlers.
+ */
 public interface SourceManager<T extends Serializable>
 {
 	void addSource(EventSource<T> source);

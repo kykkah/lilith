@@ -54,6 +54,9 @@ import java.util.TreeMap;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+/**
+ * Serialises {@link LoggingEvent} instances to the Lilith XML schema.
+ */
 public class LoggingEventWriter
 	implements GenericStreamWriter<LoggingEvent>, LoggingEventSchemaConstants
 {
@@ -63,59 +66,116 @@ public class LoggingEventWriter
 	private boolean writingSchemaLocation;
 	private TimeStampType timeStampType;
 
+	/**
+	 * Controls how timestamps are rendered in the XML output.
+	 */
 	public enum TimeStampType
 	{
+		/** Write only the ISO8601 timestamp attribute. */
 		ONLY_TIMESTAMP,
+		/** Write only the millisecond timestamp attribute. */
 		ONLY_MILLIS,
+		/** Write both the ISO8601 and millisecond timestamp attributes. */
 		BOTH
 	}
 
+	/**
+	 * Creates a writer with default configuration.
+	 */
 	public LoggingEventWriter()
 	{
 		dateTimeFormatter = new DateTimeFormatter();
 		timeStampType = TimeStampType.BOTH;
 	}
 
+	/**
+	 * Returns how timestamps are rendered in the XML output.
+	 *
+	 * @return configured timestamp type
+	 */
 	public TimeStampType getTimeStampType()
 	{
 		return timeStampType;
 	}
 
+	/**
+	 * Sets how timestamps should be rendered in the XML output.
+	 *
+	 * @param timeStampType timestamp strategy to use
+	 */
 	public void setTimeStampType(TimeStampType timeStampType)
 	{
 		this.timeStampType = timeStampType;
 	}
 
+	/**
+	 * Returns whether maps are sorted before writing them.
+	 *
+	 * @return {@code true} if maps are sorted lexicographically
+	 */
 	public boolean isSortingMaps()
 	{
 		return sortingMaps;
 	}
 
+	/**
+	 * Enables or disables sorting of map entries prior to serialisation.
+	 *
+	 * @param sortingMaps {@code true} to sort map entries
+	 */
 	public void setSortingMaps(boolean sortingMaps)
 	{
 		this.sortingMaps = sortingMaps;
 	}
 
+	/**
+	 * Returns whether the schema location attribute is emitted on the root element.
+	 *
+	 * @return {@code true} if the schema location attribute is written
+	 */
 	public boolean isWritingSchemaLocation()
 	{
 		return writingSchemaLocation;
 	}
 
+	/**
+	 * Enables or disables writing of the schema location attribute.
+	 *
+	 * @param writingSchemaLocation {@code true} to include the schema location attribute
+	 */
 	public void setWritingSchemaLocation(boolean writingSchemaLocation)
 	{
 		this.writingSchemaLocation = writingSchemaLocation;
 	}
 
+	/**
+	 * Returns the preferred namespace prefix.
+	 *
+	 * @return preferred namespace prefix or {@code null}
+	 */
 	public String getPreferredPrefix()
 	{
 		return preferredPrefix;
 	}
 
+	/**
+	 * Sets the preferred namespace prefix.
+	 *
+	 * @param prefix namespace prefix to request when writing elements
+	 */
 	public void setPreferredPrefix(String prefix)
 	{
 		this.preferredPrefix = prefix;
 	}
 
+	/**
+	 * Writes the supplied logging event to the provided stream writer.
+	 *
+	 * @param writer stream writer to output to
+	 * @param event  logging event to serialise
+	 * @param isRoot whether the event is the document root element
+	 * @throws XMLStreamException if writing fails
+	 */
 	@Override
 	public void write(XMLStreamWriter writer, LoggingEvent event, boolean isRoot)
 		throws XMLStreamException

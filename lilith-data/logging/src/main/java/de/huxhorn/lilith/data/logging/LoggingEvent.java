@@ -57,143 +57,283 @@ public class LoggingEvent
 {
 	private static final long serialVersionUID = -2135999771611827603L;
 
+	/**
+	 * Severity levels supported by Lilith.
+	 */
 	public enum Level
 	{
+		/** Finest-grained diagnostic information. */
 		TRACE,
+		/** Debugging information helpful during development. */
 		DEBUG,
+		/** General informational messages. */
 		INFO,
+		/** Potentially harmful situations. */
 		WARN,
+		/** Error events that may still allow the application to continue running. */
 		ERROR
 	}
 
+	/** Severity level of the event. */
 	private Level level;
+	/** Message template and arguments describing the event. */
 	private Message message;
+	/** Name of the logger that produced the event. */
 	private String logger;
+	/** Captured throwable information if the event logged an exception. */
 	private ThrowableInfo throwable;
+	/** Captured call stack when the event was created. */
 	private ExtendedStackTraceElement[] callStack;
+	/** Mapped diagnostic context values associated with the event. */
 	private Map<String, String> mdc;
+	/** Nested diagnostic context entries attached to the event. */
 	private Message[] ndc;
+	/** Marker used to tag the event. */
 	private Marker marker;
+	/** Metadata about the thread emitting the event. */
 	private ThreadInfo threadInfo;
+	/** Context information about the logger environment. */
 	private LoggerContext loggerContext;
+	/** Sequence number used to maintain relative ordering. */
 	private Long sequenceNumber;
+	/** Event creation time in milliseconds since the epoch. */
 	private Long timeStamp;
 
+	/**
+	 * Returns the logger name that created this event.
+	 *
+	 * @return the logger name or {@code null} if unknown
+	 */
 	public String getLogger()
 	{
 		return logger;
 	}
 
+	/**
+	 * Sets the logger name that created this event.
+	 *
+	 * @param logger the originating logger name
+	 */
 	public void setLogger(String logger)
 	{
 		this.logger = logger;
 	}
 
+	/**
+	 * Returns information about the thread that emitted the event.
+	 *
+	 * @return thread information or {@code null} if not captured
+	 */
 	public ThreadInfo getThreadInfo()
 	{
 		return threadInfo;
 	}
 
+	/**
+	 * Updates the thread details attached to this event.
+	 *
+	 * @param threadInfo metadata describing the emitting thread
+	 */
 	public void setThreadInfo(ThreadInfo threadInfo)
 	{
 		this.threadInfo = threadInfo;
 	}
 
+	/**
+	 * Returns the monotonically increasing sequence number assigned to the event.
+	 *
+	 * @return the event sequence number or {@code null} if unset
+	 */
 	public Long getSequenceNumber()
 	{
 		return sequenceNumber;
 	}
 
+	/**
+	 * Sets the sequence number used to preserve event ordering.
+	 *
+	 * @param sequenceNumber the sequence number to use
+	 */
 	public void setSequenceNumber(Long sequenceNumber)
 	{
 		this.sequenceNumber = sequenceNumber;
 	}
 
+	/**
+	 * Returns the logger context the event belongs to.
+	 *
+	 * @return the logger context or {@code null} if none applies
+	 */
 	public LoggerContext getLoggerContext()
 	{
 		return loggerContext;
 	}
 
+	/**
+	 * Associates the event with the given logger context.
+	 *
+	 * @param loggerContext context describing the emitting logger environment
+	 */
 	public void setLoggerContext(LoggerContext loggerContext)
 	{
 		this.loggerContext = loggerContext;
 	}
 
+	/**
+	 * Returns the message payload.
+	 *
+	 * @return the logging message or {@code null} if the event carried none
+	 */
 	public Message getMessage()
 	{
 		return message;
 	}
 
+	/**
+	 * Sets the message payload of this event.
+	 *
+	 * @param message the logging message to store
+	 */
 	public void setMessage(Message message)
 	{
 		this.message = message;
 	}
 
+	/**
+	 * Returns the time the event was created.
+	 *
+	 * @return the timestamp in milliseconds since the epoch or {@code null} if unknown
+	 */
 	public Long getTimeStamp()
 	{
 		return timeStamp;
 	}
 
+	/**
+	 * Sets the time the event was created.
+	 *
+	 * @param timeStamp the timestamp in milliseconds since the epoch
+	 */
 	public void setTimeStamp(Long timeStamp)
 	{
 		this.timeStamp = timeStamp;
 	}
 
+	/**
+	 * Returns the severity level of the event.
+	 *
+	 * @return the event level or {@code null} if unset
+	 */
 	public Level getLevel()
 	{
 		return level;
 	}
 
+	/**
+	 * Sets the severity level of the event.
+	 *
+	 * @param level the level to assign
+	 */
 	public void setLevel(Level level)
 	{
 		this.level = level;
 	}
 
+	/**
+	 * Returns the captured throwable information.
+	 *
+	 * @return the throwable information or {@code null} if no stack trace was attached
+	 */
 	public ThrowableInfo getThrowable()
 	{
 		return throwable;
 	}
 
+	/**
+	 * Attaches throwable details to the event.
+	 *
+	 * @param throwable the throwable information to store
+	 */
 	public void setThrowable(ThrowableInfo throwable)
 	{
 		this.throwable = throwable;
 	}
 
+	/**
+	 * Returns the mapped diagnostic context values.
+	 *
+	 * @return the MDC map or {@code null} if no MDC was captured
+	 */
 	public Map<String, String> getMdc()
 	{
 		return mdc;
 	}
 
+	/**
+	 * Sets the mapped diagnostic context for the event.
+	 *
+	 * @param mdc the MDC values to store
+	 */
 	public void setMdc(Map<String, String> mdc)
 	{
 		this.mdc = mdc;
 	}
 
+	/**
+	 * Returns the nested diagnostic context values.
+	 *
+	 * @return the NDC array or {@code null} if absent
+	 */
 	public Message[] getNdc()
 	{
 		return ndc;
 	}
 
+	/**
+	 * Sets the nested diagnostic context values.
+	 *
+	 * @param ndc the NDC messages to store
+	 */
 	public void setNdc(Message[] ndc)
 	{
 		this.ndc = ndc;
 	}
 
+	/**
+	 * Returns the marker associated with the event.
+	 *
+	 * @return the marker or {@code null} if none was specified
+	 */
 	public Marker getMarker()
 	{
 		return marker;
 	}
 
+	/**
+	 * Sets the marker associated with the event.
+	 *
+	 * @param marker the marker to attach
+	 */
 	public void setMarker(Marker marker)
 	{
 		this.marker = marker;
 	}
 
+	/**
+	 * Returns the captured call stack.
+	 *
+	 * @return the call stack or {@code null} if the event has none
+	 */
 	public ExtendedStackTraceElement[] getCallStack()
 	{
 		return callStack;
 	}
 
+	/**
+	 * Sets the captured call stack.
+	 *
+	 * @param callStack the call stack to store
+	 */
 	public void setCallStack(ExtendedStackTraceElement[] callStack)
 	{
 		this.callStack = callStack;

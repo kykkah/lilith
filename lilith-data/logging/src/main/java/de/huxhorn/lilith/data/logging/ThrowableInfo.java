@@ -39,15 +39,21 @@ import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.Objects;
 
+/**
+ * Serializable representation of a {@link Throwable}, including stack trace, cause chain, and suppressed exceptions.
+ */
 @SuppressWarnings({"PMD.MethodReturnsInternalArray", "PMD.ArrayIsStoredDirectly"})
 public class ThrowableInfo
 	implements Serializable, Cloneable
 {
 	private static final long serialVersionUID = -6320441996003349426L;
 
+	/** Prefix used when rendering nested exception causes. */
 	public static final String CAUSED_BY_PREFIX = "Caused by: ";
+	/** Prefix used when rendering suppressed exceptions. */
 	public static final String SUPPRESSED_PREFIX = "Suppressed: ";
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	/** Shared empty array instance to avoid repeated allocations. */
 	public static final ThrowableInfo[] ARRAY_PROTOTYPE = new ThrowableInfo[0];
 
 	private String name;
@@ -57,66 +63,127 @@ public class ThrowableInfo
 	private ThrowableInfo[] suppressed;
 	private ThrowableInfo cause;
 
+	/**
+	 * Returns the fully qualified class name of the throwable.
+	 *
+	 * @return throwable class name or {@code null} if unknown
+	 */
 	public String getName()
 	{
 		return name;
 	}
 
+	/**
+	 * Sets the fully qualified class name of the throwable.
+	 *
+	 * @param name throwable class name to store
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
+	/**
+	 * Returns the throwable message.
+	 *
+	 * @return throwable message or {@code null} if none was provided
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
 
+	/**
+	 * Sets the throwable message.
+	 *
+	 * @param message message text to store
+	 */
 	public void setMessage(String message)
 	{
 		this.message = message;
 	}
 
+	/**
+	 * Returns the captured stack trace.
+	 *
+	 * @return stack trace elements or {@code null} if none were recorded
+	 */
 	public ExtendedStackTraceElement[] getStackTrace()
 	{
 		return stackTrace;
 	}
 
+	/**
+	 * Sets the captured stack trace.
+	 *
+	 * @param stackTrace stack trace elements to store
+	 */
 	public void setStackTrace(ExtendedStackTraceElement[] stackTrace)
 	{
 		this.stackTrace = stackTrace;
 	}
 
+	/**
+	 * Returns the suppressed throwable information.
+	 *
+	 * @return suppressed throwables or {@code null} if none exist
+	 */
 	public ThrowableInfo[] getSuppressed()
 	{
 		return suppressed;
 	}
 
+	/**
+	 * Sets the suppressed throwable information.
+	 *
+	 * @param suppressed suppressed throwables to store
+	 */
 	public void setSuppressed(ThrowableInfo[] suppressed)
 	{
 		this.suppressed = suppressed;
 	}
 
+	/**
+	 * Returns the cause of this throwable.
+	 *
+	 * @return cause information or {@code null} if none was captured
+	 */
 	public ThrowableInfo getCause()
 	{
 		return cause;
 	}
 
+	/**
+	 * Sets the cause of this throwable.
+	 *
+	 * @param cause cause information to store
+	 */
 	public void setCause(ThrowableInfo cause)
 	{
 		this.cause = cause;
 	}
 
+	/**
+	 * Returns the number of omitted stack trace elements.
+	 *
+	 * @return count of omitted stack trace elements
+	 */
 	public int getOmittedElements()
 	{
 		return omittedElements;
 	}
 
+	/**
+	 * Sets the number of omitted stack trace elements.
+	 *
+	 * @param omittedElements count of omitted stack trace elements
+	 */
 	public void setOmittedElements(int omittedElements)
 	{
 		this.omittedElements = omittedElements;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object o)
 	{
@@ -200,6 +267,7 @@ public class ThrowableInfo
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode()
 	{
@@ -239,6 +307,7 @@ public class ThrowableInfo
 		return result;
 	}
 
+	/** {@inheritDoc} */
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public ThrowableInfo clone() throws CloneNotSupportedException
@@ -289,11 +358,10 @@ public class ThrowableInfo
 				}
 			}
 		}
-
-
 		return result;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString()
 	{

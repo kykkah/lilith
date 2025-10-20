@@ -51,6 +51,9 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 
 
+/**
+ * Shared test utility for verifying logging event roundtrips.
+ */
 public abstract class LoggingEventIOTestBase
 	extends LoggingTestBase
 {

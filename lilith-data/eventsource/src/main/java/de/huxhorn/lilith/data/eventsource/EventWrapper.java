@@ -36,6 +36,9 @@ package de.huxhorn.lilith.data.eventsource;
 
 import java.io.Serializable;
 
+/**
+ * Bundles an event together with its identifier information.
+ */
 public class EventWrapper<T extends Serializable>
 	implements Serializable
 {
@@ -44,23 +47,44 @@ public class EventWrapper<T extends Serializable>
 	private EventIdentifier eventIdentifier;
 	private T event;
 
-	public EventWrapper()
-	{
-		this(null, -1, null);
-	}
+    /**
+     * Creates an empty wrapper.
+     */
+    public EventWrapper()
+    {
+        this(null, -1, null);
+    }
 
-	public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
-	{
-		this(new EventIdentifier(sourceIdentifier, localId), event);
-	}
+    /**
+     * Creates a wrapper using the supplied source identifier and local id.
+     *
+     * @param sourceIdentifier source identifier of the event
+     * @param localId          monotonically increasing id within the source
+     * @param event            wrapped event payload
+     */
+    public EventWrapper(SourceIdentifier sourceIdentifier, long localId, T event)
+    {
+        this(new EventIdentifier(sourceIdentifier, localId), event);
+    }
 
-	public EventWrapper(EventIdentifier eventIdentifier, T event)
-	{
-		this.eventIdentifier = eventIdentifier;
-		this.event = event;
-	}
+    /**
+     * Creates a wrapper using the supplied identifier.
+     *
+     * @param eventIdentifier identifier describing the event origin
+     * @param event           wrapped event payload
+     */
+    public EventWrapper(EventIdentifier eventIdentifier, T event)
+    {
+        this.eventIdentifier = eventIdentifier;
+        this.event = event;
+    }
 
-	public SourceIdentifier getSourceIdentifier()
+    /**
+     * Returns the identifier of the source that produced the event.
+     *
+     * @return source identifier or {@code null} if none is set
+     */
+    public SourceIdentifier getSourceIdentifier()
 	{
 		if(eventIdentifier != null)
 		{
@@ -69,7 +93,12 @@ public class EventWrapper<T extends Serializable>
 		return null;
 	}
 
-	public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
+    /**
+     * Sets the identifier of the source that produced the event.
+     *
+     * @param sourceIdentifier source identifier to store
+     */
+    public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
 	{
 		if(eventIdentifier == null)
 		{
@@ -78,7 +107,12 @@ public class EventWrapper<T extends Serializable>
 		eventIdentifier.setSourceIdentifier(sourceIdentifier);
 	}
 
-	public long getLocalId()
+    /**
+     * Returns the local identifier that is unique within the source.
+     *
+     * @return local identifier or {@link EventIdentifier#NO_LOCAL_ID} if unset
+     */
+    public long getLocalId()
 	{
 		if(eventIdentifier != null)
 		{
@@ -87,7 +121,12 @@ public class EventWrapper<T extends Serializable>
 		return EventIdentifier.NO_LOCAL_ID;
 	}
 
-	public void setLocalId(long localId)
+    /**
+     * Sets the local identifier unique within the source.
+     *
+     * @param localId local identifier to store
+     */
+    public void setLocalId(long localId)
 	{
 		if(eventIdentifier == null)
 		{
@@ -96,26 +135,47 @@ public class EventWrapper<T extends Serializable>
 		eventIdentifier.setLocalId(localId);
 	}
 
-	public EventIdentifier getEventIdentifier()
+    /**
+     * Returns the event identifier.
+     *
+     * @return event identifier or {@code null} if none is set
+     */
+    public EventIdentifier getEventIdentifier()
 	{
 		return eventIdentifier;
 	}
 
-	public void setEventIdentifier(EventIdentifier eventIdentifier)
+    /**
+     * Sets the event identifier.
+     *
+     * @param eventIdentifier identifier to store
+     */
+    public void setEventIdentifier(EventIdentifier eventIdentifier)
 	{
 		this.eventIdentifier = eventIdentifier;
 	}
 
-	public T getEvent()
+    /**
+     * Returns the wrapped event payload.
+     *
+     * @return event payload or {@code null}
+     */
+    public T getEvent()
 	{
 		return event;
 	}
 
-	public void setEvent(T event)
+    /**
+     * Sets the wrapped event payload.
+     *
+     * @param event event payload to store
+     */
+    public void setEvent(T event)
 	{
 		this.event = event;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object o)
 	{
@@ -132,6 +192,7 @@ public class EventWrapper<T extends Serializable>
 
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int hashCode()
 	{
@@ -142,6 +203,7 @@ public class EventWrapper<T extends Serializable>
 		return (event != null ? event.hashCode() : 0);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String toString()
 	{

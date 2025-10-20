@@ -18,10 +18,11 @@
 package de.huxhorn.lilith.api;
 
 /**
- * Defining the constants in one place...
+ * Constants shared between Lilith file formats and metadata keys.
  */
 public interface FileConstants
 {
+	/** Magic header written at the start of Lilith container files. */
 	int MAGIC_VALUE = 0x0B5E55ED;
 
 	String FILE_EXTENSION = ".lilith";
