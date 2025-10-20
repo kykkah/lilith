@@ -44,6 +44,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Basic implementation of {@link SendBytesService} that writes events to a socket with reconnection support.
+ */
 public class SimpleSendBytesService
 	implements SendBytesService
 {
@@ -64,19 +67,36 @@ public class SimpleSendBytesService
 	private final long reconnectionDelay;
 	private final int pollInterval;
 
+	/** Buffer that stores outgoing events while offline. */
 	private final BlockingQueue<byte[]> localEventBytes;
 
 	private final AtomicReference<ConnectionState> connectionState=new AtomicReference<>(ConnectionState.OFFLINE);
 	private final AtomicBoolean shutdownIndicator = new AtomicBoolean(false);
 
+	/** Background worker that performs network I/O. */
 	private SendBytesThread sendBytesThread;
 	private boolean debug;
 
+	/**
+	 * Creates a send service with default queue size and timings.
+	 *
+	 * @param dataOutputStreamFactory factory providing output streams
+	 * @param writeByteStrategy       strategy used to serialise payloads
+	 */
 	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy)
 	{
 		this(dataOutputStreamFactory, writeByteStrategy, DEFAULT_QUEUE_SIZE, DEFAULT_RECONNECTION_DELAY, DEFAULT_POLL_INTERVAL);
 	}
 
+	/**
+	 * Creates a send service with custom configuration.
+	 *
+	 * @param dataOutputStreamFactory factory providing output streams
+	 * @param writeByteStrategy       strategy used to serialise payloads
+	 * @param queueSize               maximum buffered events
+	 * @param reconnectionDelay       delay between reconnection attempts
+	 * @param pollInterval            polling interval in milliseconds
+	 */
 	public SimpleSendBytesService(DataOutputStreamFactory dataOutputStreamFactory, WriteByteStrategy writeByteStrategy, int queueSize, long reconnectionDelay, int pollInterval)
 	{
 		this.dataOutputStreamFactory = Objects.requireNonNull(dataOutputStreamFactory, "dataOutputStreamFactory must not be null!");
@@ -103,22 +123,38 @@ public class SimpleSendBytesService
 		this.localEventBytes = new ArrayBlockingQueue<>(queueSize, true);
 	}
 
+	/**
+	 * Returns whether debug logging is enabled.
+	 *
+	 * @return {@code true} if debug logging is enabled
+	 */
 	public boolean isDebug()
 	{
 		return debug;
 	}
 
+	/**
+	 * Enables or disables debug logging.
+	 *
+	 * @param debug {@code true} to enable debug logging
+	 */
 	public void setDebug(boolean debug)
 	{
 		this.debug = debug;
 	}
 
+	/**
+	 * Returns the current connection state.
+	 *
+	 * @return the current connection state
+	 */
 	public ConnectionState getConnectionState()
 	{
 		return connectionState.get();
 	}
 
 	@Override
+	/** {@inheritDoc} */
 	public void sendBytes(byte[] bytes)
 	{
 		if(connectionState.get() == ConnectionState.CONNECTED && sendBytesThread != null && bytes != null)
@@ -135,6 +171,7 @@ public class SimpleSendBytesService
 	}
 
 	@Override
+	/** {@inheritDoc} */
 	public void startUp()
 	{
 		synchronized(lock)
@@ -149,6 +186,7 @@ public class SimpleSendBytesService
 	}
 
 	@Override
+	/** {@inheritDoc} */
 	public void shutDown()
 	{
 		shutdownIndicator.set(true);
@@ -183,6 +221,7 @@ public class SimpleSendBytesService
 			setDaemon(true);
 		}
 
+			/** Closes the current connection and updates the state. */
 		void closeConnection()
 		{
 			synchronized(lock)

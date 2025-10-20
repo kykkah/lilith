@@ -45,22 +45,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * Manages sending of logging events to multiple remote sockets with reconnection support.
+ */
 public abstract class MultiplexSocketAppenderBase<E>
 	extends UnsynchronizedAppenderBase<E>
 {
 	private static final int DEFAULT_QUEUE_SIZE = 1000;
 
+	/** Encoder used to serialise events before sending. */
 	private Encoder<E> encoder;
+	/** Port used for transmitting events. */
 	private int port;
+	/** Target hosts that receive events. */
 	private final List<String> remoteHostsList;
+	/** Identifier of the sending application. */
 	private String applicationIdentifier;
+	/** Thread maintaining the keep-alive heartbeat. */
 	private Thread heartbeatThread;
+	/** Delay between reconnection attempts in milliseconds. */
 	private long reconnectionDelay;
+	/** Strategy responsible for writing bytes to the socket. */
 	private WriteByteStrategy writeByteStrategy;
+	/** Maximum number of events buffered while disconnected. */
 	private int queueSize;
+	/** Helper that multiplexes events across target hosts. */
 	private MultiplexSendBytesService multiplexSendBytes;
+	/** Enables verbose debug output. */
 	private boolean debug;
+	/** Indicates whether the appender should generate a UUID. */
 	private boolean creatingUUID=true;
+	/** Cached UUID associated with this appender instance. */
 	private String uuid;
 
 	public MultiplexSocketAppenderBase()
@@ -80,57 +95,113 @@ public abstract class MultiplexSocketAppenderBase<E>
 		remoteHostsList=new ArrayList<>();
 	}
 
+	/**
+	 * Sets creatingUUID.
+	 *
+	 * @param creatingUUID new creatingUUID value
+	 */
 	public void setCreatingUUID(boolean creatingUUID)
 	{
 		this.creatingUUID = creatingUUID;
 	}
 
+	/**
+	 * Returns uUID.
+	 *
+	 * @return uUID value
+	 */
 	protected String getUUID()
 	{
 		return uuid;
 	}
 
+	/**
+	 * Sets uUID.
+	 *
+	 * @param uuid new uUID value
+	 */
 	private void setUUID(String uuid)
 	{
 		this.uuid = uuid;
 		uuidChanged();
 	}
 
+	/**
+	 * Executes uuidChanged.
+	 */
 	protected abstract void uuidChanged();
 
+	/**
+	 * Returns whether debug is enabled.
+	 *
+	 * @return true if debug is enabled
+	 */
 	public boolean isDebug()
 	{
 		return debug;
 	}
 
+	/**
+	 * Sets debug.
+	 *
+	 * @param debug new debug value
+	 */
 	public void setDebug(boolean debug)
 	{
 		this.debug = debug;
 	}
 
+	/**
+	 * Returns applicationIdentifier.
+	 *
+	 * @return applicationIdentifier value
+	 */
 	protected String getApplicationIdentifier()
 	{
 		return applicationIdentifier;
 	}
 
+	/**
+	 * Sets applicationIdentifier.
+	 *
+	 * @param applicationIdentifier new applicationIdentifier value
+	 */
 	public void setApplicationIdentifier(String applicationIdentifier)
 	{
 		this.applicationIdentifier = applicationIdentifier;
 		applicationIdentifierChanged();
 	}
 
+	/**
+	 * Executes applicationIdentifierChanged.
+	 */
 	protected abstract void applicationIdentifierChanged();
 
+	/**
+	 * Sets reconnectionDelay.
+	 *
+	 * @param reconnectionDelay new reconnectionDelay value
+	 */
 	public void setReconnectionDelay(long reconnectionDelay)
 	{
 		this.reconnectionDelay = reconnectionDelay;
 	}
 
+	/**
+	 * Returns port.
+	 *
+	 * @return port value
+	 */
 	public int getPort()
 	{
 		return port;
 	}
 
+	/**
+	 * Sets port.
+	 *
+	 * @param port new port value
+	 */
 	public void setPort(int port)
 	{
 		this.port = port;
@@ -142,6 +213,11 @@ public abstract class MultiplexSocketAppenderBase<E>
 	 * @param remoteHosts comma-separated list of hosts.
 	 */
 	@SuppressWarnings("unused")
+	/**
+	 * Sets remoteHosts.
+	 *
+	 * @param remoteHosts new remoteHosts value
+	 */
 	public void setRemoteHosts(String remoteHosts)
 	{
 		StringTokenizer tok = new StringTokenizer(remoteHosts, ",", false);
@@ -166,6 +242,11 @@ public abstract class MultiplexSocketAppenderBase<E>
 	 * @param remoteHostsList the list of remote hosts.
 	 */
 	@SuppressWarnings("WeakerAccess")
+	/**
+	 * Sets remoteHostsList.
+	 *
+	 * @param remoteHostsList new remoteHostsList value
+	 */
 	public void setRemoteHostsList(List<String> remoteHostsList)
 	{
 		if(debug)
@@ -177,8 +258,13 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 
+	/**
+	 * Adds a single remote host to the list if it is not already present.
+	 *
+	 * @param remoteHost host to add
+	 */
 	@SuppressWarnings("unused")
-	public void addRemoteHost(String remoteHost)
+	 public void addRemoteHost(String remoteHost)
 	{
 		remoteHost=remoteHost.trim();
 		if(!"".equals(remoteHost) && !this.remoteHostsList.contains(remoteHost))
@@ -191,6 +277,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 	 * Start this appender.
 	 */
 	@Override
+	/**
+	 * Executes start.
+	 */
 	public void start()
 	{
 		if(!started)
@@ -243,6 +332,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 
+	/**
+	 * Executes initialize.
+	 */
 	private void initialize()
 	{
 		if(multiplexSendBytes != null)
@@ -278,6 +370,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 	 * method.
 	 */
 	@Override
+	/**
+	 * Executes stop.
+	 */
 	public void stop()
 	{
 		if(!isStarted())
@@ -289,6 +384,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 		cleanUp();
 	}
 
+	/**
+	 * Executes cleanUp.
+	 */
 	private void cleanUp()
 	{
 		addInfo("Cleaning up " + this + ".");
@@ -306,6 +404,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 		multiplexSendBytes = null;
 	}
 
+	/**
+	 * Executes sendBytes.
+	 */
 	private void sendBytes(byte[] bytes)
 	{
 		if(multiplexSendBytes != null)
@@ -315,6 +416,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 	@Override
+	/**
+	 * Executes append.
+	 */
 	protected void append(E e)
 	{
 		if(encoder != null)
@@ -328,8 +432,16 @@ public abstract class MultiplexSocketAppenderBase<E>
 		}
 	}
 
+	/**
+	 * Executes preProcess.
+	 */
 	protected abstract void preProcess(E e);
 
+	/**
+	 * Sets encoder.
+	 *
+	 * @param encoder new encoder value
+	 */
 	protected void setEncoder(Encoder<E> encoder)
 	{
 		this.encoder = encoder;

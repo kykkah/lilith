@@ -22,6 +22,9 @@ import de.huxhorn.sulky.conditions.Condition;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+/**
+ * Base action that applies a condition to a view container.
+ */
 public abstract class AbstractBasicFilterAction
 	extends AbstractAction
 	implements BasicFilterAction
@@ -31,6 +34,12 @@ public abstract class AbstractBasicFilterAction
 	protected transient ViewContainer<?> viewContainer;
 	protected final boolean htmlTooltip;
 
+	/**
+	 * Creates the action.
+	 *
+	 * @param name         action name
+	 * @param htmlTooltip  whether tooltips are HTML formatted
+	 */
 	protected AbstractBasicFilterAction(String name, boolean htmlTooltip)
 	{
 		super(name);
@@ -53,6 +62,9 @@ public abstract class AbstractBasicFilterAction
 		return viewContainer;
 	}
 
+	/**
+	 * Hook invoked when the view container changes.
+	 */
 	protected void viewContainerUpdated()
 	{
 		setEnabled(viewContainer != null);
@@ -76,16 +88,32 @@ public abstract class AbstractBasicFilterAction
 		viewContainer.applyCondition(condition, e);
 	}
 
+	/**
+	 * Returns whether the ALT modifier was pressed.
+	 *
+	 * @param e action event
+	 * @return true if the alternative behaviour is requested
+	 */
 	protected boolean isAlternativeBehaviorRequested(ActionEvent e)
 	{
 		return e != null && (e.getModifiers() & ActionEvent.ALT_MASK) != 0;
 	}
 
+	/**
+	 * Configures a cropped tooltip for this action.
+	 *
+	 * @param tooltip tooltip text
+	 */
 	protected void initializeCroppedTooltip(String tooltip)
 	{
 		ActionTooltips.initializeCroppedTooltip(tooltip, this, htmlTooltip);
 	}
 
+	/**
+	 * Configures a condition-based tooltip for this action.
+	 *
+	 * @param condition tooltip condition
+	 */
 	protected void initializeConditionTooltip(Condition condition)
 	{
 		ActionTooltips.initializeConditionTooltip(condition, this, htmlTooltip);

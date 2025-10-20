@@ -65,6 +65,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies minimal behaviour.
+	 */
 	public void minimal()
 		throws Throwable
 	{
@@ -73,6 +76,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies loggerContext behaviour.
+	 */
 	public void loggerContext()
 		throws Throwable
 	{
@@ -88,6 +94,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies sequenceNumber behaviour.
+	 */
 	public void sequenceNumber()
 		throws Throwable
 	{
@@ -98,6 +107,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies threadInfo behaviour.
+	 */
 	public void threadInfo()
 		throws Throwable
 	{
@@ -109,6 +121,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies arguments behaviour.
+	 */
 	public void arguments()
 		throws Throwable
 	{
@@ -119,6 +134,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies nullArgument behaviour.
+	 */
 	public void nullArgument()
 		throws Throwable
 	{
@@ -129,6 +147,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies singleThrowable behaviour.
+	 */
 	public void singleThrowable()
 		throws Throwable
 	{
@@ -139,6 +160,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies multiThrowable behaviour.
+	 */
 	public void multiThrowable()
 		throws Throwable
 	{
@@ -153,6 +177,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies mdc behaviour.
+	 */
 	public void mdc()
 		throws Throwable
 	{
@@ -166,6 +193,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies ndc behaviour.
+	 */
 	public void ndc()
 		throws Throwable
 	{
@@ -179,6 +209,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies singleMarker behaviour.
+	 */
 	public void singleMarker()
 		throws Throwable
 	{
@@ -189,6 +222,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies childMarker behaviour.
+	 */
 	public void childMarker()
 		throws Throwable
 	{
@@ -203,6 +239,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies recursiveMarker behaviour.
+	 */
 	public void recursiveMarker()
 		throws Throwable
 	{
@@ -220,6 +259,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies callStack behaviour.
+	 */
 	public void callStack()
 		throws Throwable
 	{
@@ -229,6 +271,9 @@ public abstract class LoggingEventIOTestBase
 	}
 
 	@Test
+	/**
+	 * Verifies full behaviour.
+	 */
 	public void full()
 		throws Throwable
 	{

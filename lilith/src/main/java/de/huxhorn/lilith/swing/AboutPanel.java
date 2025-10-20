@@ -174,11 +174,21 @@ public final class AboutPanel
 		this(backgroundImageUrl, scrollArea, scrollText, null, null, -1);
 	}
 
+	/**
+	 * Returns whether debug is enabled.
+	 *
+	 * @return true if debug is enabled
+	 */
 	public boolean isDebug()
 	{
 		return debug;
 	}
 
+	/**
+	 * Updates the debug value.
+	 *
+	 * @param debug new debug value
+	 */
 	public void setDebug(boolean debug)
 	{
 		this.debug = debug;
@@ -256,6 +266,9 @@ public final class AboutPanel
 		setScrolling(false);
 	}
 
+	/**
+	 * Executes init.
+	 */
 	private void init(URL backgroundImageUrl, Rectangle scrollArea, String scrollText, URL imageUrl, String versionText, int versionHeight)
 		throws IOException
 	{
@@ -269,6 +282,9 @@ public final class AboutPanel
 		setScrollText(scrollText);
 	}
 
+	/**
+	 * Executes initAttributes.
+	 */
 	private void initAttributes()
 	{
 		preferredSize = new Dimension();
@@ -282,6 +298,11 @@ public final class AboutPanel
 	}
 
 
+	/**
+	 * Updates the scrollText value.
+	 *
+	 * @param scrollText new scrollText value
+	 */
 	public void setScrollText(String scrollText)
 	{
 		StringTokenizer st = new StringTokenizer(scrollText, "\n", true);
@@ -314,6 +335,11 @@ public final class AboutPanel
 		setScrollLines(loScrollLines);
 	}
 
+	/**
+	 * Updates the scrollLines value.
+	 *
+	 * @param scrollLines new scrollLines value
+	 */
 	protected void setScrollLines(String[] scrollLines)
 	{
 		Objects.requireNonNull(scrollLines, "scrollLines must not be null!");
@@ -327,6 +353,11 @@ public final class AboutPanel
 	 * @param imageUrl the image to be used as background.
 	 * @throws IOException if loading of image fails.
 	 */
+	/**
+	 * Updates the backgroundImage value.
+	 *
+	 * @param imageUrl new backgroundImage value
+	 */
 	public void setBackgroundImage(URL imageUrl)
 		throws IOException
 	{
@@ -338,6 +369,11 @@ public final class AboutPanel
 	 * Sets the backgroundImage attribute of the <code>AboutPanel</code> object
 	 *
 	 * @param backgroundImage The new backgroundImage value
+	 */
+	/**
+	 * Updates the backgroundImage value.
+	 *
+	 * @param backgroundImage new backgroundImage value
 	 */
 	public void setBackgroundImage(BufferedImage backgroundImage)
 	{
@@ -351,6 +387,11 @@ public final class AboutPanel
 	}
 
 
+	/**
+	 * Updates the aboutImage value.
+	 *
+	 * @param imageUrl new aboutImage value
+	 */
 	public void setAboutImage(URL imageUrl)
 		throws IOException
 	{
@@ -358,6 +399,11 @@ public final class AboutPanel
 	}
 
 
+	/**
+	 * Updates the aboutImage value.
+	 *
+	 * @param aboutImage new aboutImage value
+	 */
 	public void setAboutImage(BufferedImage aboutImage)
 	{
 		if(this.aboutImage != null)
@@ -373,6 +419,11 @@ public final class AboutPanel
 	 * Sets the scrollArea attribute of the <code>AboutPanel</code> object
 	 *
 	 * @param scrollArea The new scrollArea value
+	 */
+	/**
+	 * Updates the scrollArea value.
+	 *
+	 * @param scrollArea new scrollArea value
 	 */
 	public void setScrollArea(Rectangle scrollArea)
 	{
@@ -393,6 +444,9 @@ public final class AboutPanel
 	/**
 	 * Description of the Method
 	 */
+	/**
+	 * Executes flushScrollImage.
+	 */
 	private void flushScrollImage()
 	{
 		if(scrollImage != null)
@@ -408,6 +462,9 @@ public final class AboutPanel
 	/**
 	 * Description of the Method
 	 */
+	/**
+	 * Executes flushOffscreenImage.
+	 */
 	private void flushOffscreenImage()
 	{
 		if(offscreenImage != null)
@@ -421,6 +478,9 @@ public final class AboutPanel
 
 	/**
 	 * Description of the Method
+	 */
+	/**
+	 * Executes updateBackgroundAttributes.
 	 */
 	private void updateBackgroundAttributes()
 	{
@@ -451,6 +511,11 @@ public final class AboutPanel
 	 *
 	 * @param toolTipText The new ScrollAreaToolTipText value
 	 */
+	/**
+	 * Updates the scrollAreaToolTipText value.
+	 *
+	 * @param toolTipText new scrollAreaToolTipText value
+	 */
 	public void setScrollAreaToolTipText(String toolTipText)
 	{
 		scrollAreaToolTipText = toolTipText;
@@ -462,6 +527,11 @@ public final class AboutPanel
 	 * object
 	 *
 	 * @return The ScrollAreaToolTipText value
+	 */
+	/**
+	 * Returns the scrollAreaToolTipText value.
+	 *
+	 * @return the scrollAreaToolTipText value
 	 */
 	public String getScrollAreaToolTipText()
 	{
@@ -479,6 +549,11 @@ public final class AboutPanel
 	 * @return The toolTipText value for the <code>ToolTipManager</code>.
 	 */
 	@Override
+	/**
+	 * Returns the toolTipText value.
+	 *
+	 * @return the toolTipText value
+	 */
 	public String getToolTipText(MouseEvent evt)
 	{
 		if(handleMouseEvent(evt))
@@ -488,6 +563,9 @@ public final class AboutPanel
 		return null;
 	}
 
+	/**
+	 * Executes handleMouseEvent.
+	 */
 	protected boolean handleMouseEvent(MouseEvent evt)
 	{
 		Rectangle loArea = null;
@@ -520,6 +598,9 @@ public final class AboutPanel
 	 *
 	 * @see #setScrollPosition
 	 */
+	/**
+	 * Executes increaseScrollPosition.
+	 */
 	protected void increaseScrollPosition()
 	{
 		setScrollPosition(scrollPosition + SCROLL_PIXELS);
@@ -535,6 +616,11 @@ public final class AboutPanel
 	 *                       the height-offset of the scroll-area.
 	 * @see #getMinimumScrollPosition
 	 * @see #getMaximumScrollPosition
+	 */
+	/**
+	 * Updates the scrollPosition value.
+	 *
+	 * @param scrollPosition new scrollPosition value
 	 */
 	public void setScrollPosition(int scrollPosition)
 	{
@@ -563,6 +649,11 @@ public final class AboutPanel
 	 *
 	 * @return this value indicates the height-offset of the scroll-area.
 	 */
+	/**
+	 * Returns the scrollPosition value.
+	 *
+	 * @return the scrollPosition value
+	 */
 	public int getScrollPosition()
 	{
 		return scrollPosition;
@@ -574,6 +665,11 @@ public final class AboutPanel
 	 * object. It's value is the negated value of the scroll-area-height.
 	 *
 	 * @return The MinimumScrollPosition value
+	 */
+	/**
+	 * Returns the minimumScrollPosition value.
+	 *
+	 * @return the minimumScrollPosition value
 	 */
 	public int getMinimumScrollPosition()
 	{
@@ -588,6 +684,11 @@ public final class AboutPanel
 	 *
 	 * @return The MaximumScrollPosition value
 	 */
+	/**
+	 * Returns the maximumScrollPosition value.
+	 *
+	 * @return the maximumScrollPosition value
+	 */
 	public int getMaximumScrollPosition()
 	{
 		return maxScrollPosition;
@@ -598,6 +699,9 @@ public final class AboutPanel
 	 * This method creates the offscreen-image when needed (when called for the
 	 * first time or recreated because of a changed font) and updates it on
 	 * subsequent calls by calling <code>updateOffscreenImage()</code>.
+	 */
+	/**
+	 * Executes processOffscreenImage.
 	 */
 	private void processOffscreenImage()
 	{
@@ -652,6 +756,9 @@ public final class AboutPanel
 	 *
 	 * @param g <code>Graphics</code>-object
 	 */
+	/**
+	 * Executes drawScrollArea.
+	 */
 	private void drawScrollArea(Graphics2D g)
 	{
 		initScrollImage();
@@ -685,6 +792,9 @@ public final class AboutPanel
 	/**
 	 * Initializes the scroll-image if needed. The scroll-image is as high as
 	 * needed to contain all the scroll-lines and (if available) the image.
+	 */
+	/**
+	 * Executes initScrollImage.
 	 */
 	private void initScrollImage()
 	{
@@ -790,6 +900,11 @@ public final class AboutPanel
 
 	}
 
+	/**
+	 * Returns the gaussianBlurFilter value.
+	 *
+	 * @return the gaussianBlurFilter value
+	 */
 	public static ConvolveOp getGaussianBlurFilter(int radius, boolean horizontal)
 	{
 		if(radius < 1)
@@ -842,6 +957,11 @@ public final class AboutPanel
 	 * @param newFont The new font value.
 	 */
 	@Override
+	/**
+	 * Updates the font value.
+	 *
+	 * @param newFont new font value
+	 */
 	public void setFont(Font newFont)
 	{
 		if(newFont == null)
@@ -863,6 +983,9 @@ public final class AboutPanel
 	 * @param graphics <code>Graphics</code>-object
 	 */
 	@Override
+	/**
+	 * Paints this panel.
+	 */
 	public void paintComponent(Graphics graphics)
 	{
 		super.paintComponent(graphics);
@@ -884,6 +1007,9 @@ public final class AboutPanel
 	/**
 	 * Makes sure that the private attributes size, paintArea, offscreenOffset and
 	 * translated areas have sane values. It's called on component-resize.
+	 */
+	/**
+	 * Executes calculateAttributes.
 	 */
 	private void calculateAttributes()
 	{
@@ -926,6 +1052,9 @@ public final class AboutPanel
 	 * when the preferred size is calculated. Any border will work. It is called by
 	 * the property-change-listener if the border was changed.
 	 */
+	/**
+	 * Executes calculatePreferredSize.
+	 */
 	protected void calculatePreferredSize()
 	{
 		insets = getInsets(insets);
@@ -939,6 +1068,9 @@ public final class AboutPanel
 	/**
 	 * This method requests a repaint of the scroll-area. The rest of the component
 	 * will not be repainted. It is called by <code>setScrollPosition()</code> .
+	 */
+	/**
+	 * Executes repaintScrollArea.
 	 */
 	private void repaintScrollArea()
 	{
@@ -963,6 +1095,9 @@ public final class AboutPanel
 	 * @see #getMinimumScrollPosition
 	 */
 	@Override
+	/**
+	 * Executes addNotify.
+	 */
 	public void addNotify()
 	{
 		super.addNotify();
@@ -980,6 +1115,9 @@ public final class AboutPanel
 	 * @see #setScrolling
 	 */
 	@Override
+	/**
+	 * Executes removeNotify.
+	 */
 	public void removeNotify()
 	{
 		super.removeNotify();
@@ -999,6 +1137,11 @@ public final class AboutPanel
 	 * work. A value of <code>false</code> will send it into wait-state instead.
 	 *
 	 * @param scrolling The new scrolling value
+	 */
+	/**
+	 * Updates the scrolling value.
+	 *
+	 * @param scrolling new scrolling value
 	 */
 	public void setScrolling(boolean scrolling)
 	{
@@ -1024,6 +1167,11 @@ public final class AboutPanel
 	 * it returns <code>false</code> then the scroll-thread is waiting.
 	 *
 	 * @return The scrolling value
+	 */
+	/**
+	 * Returns whether scrolling is enabled.
+	 *
+	 * @return true if scrolling is enabled
 	 */
 	public boolean isScrolling()
 	{

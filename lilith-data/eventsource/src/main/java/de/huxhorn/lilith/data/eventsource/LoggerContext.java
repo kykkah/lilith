@@ -38,43 +38,78 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Describes the context associated with a logging source (e.g. LoggerContext in logback).
+ */
 public class LoggerContext
 	implements Cloneable, Serializable
 {
 	private static final long serialVersionUID = -1979182848053339299L;
 
+	/** Property key used for the application identifier. */
 	public static final String APPLICATION_IDENTIFIER_PROPERTY_NAME = "applicationIdentifier";
+	/** Property key used for the application UUID. */
 	public static final String APPLICATION_UUID_PROPERTY_NAME = "applicationUUID";
 
 	private String name;
 	private Long birthTime;
 	private Map<String, String> properties;
 
+	/**
+	 * Returns the context name.
+	 *
+	 * @return context name or {@code null}
+	 */
 	public String getName()
 	{
 		return name;
 	}
 
+	/**
+	 * Sets the context name.
+	 *
+	 * @param name context name to store
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
+	/**
+	 * Returns the birth time in milliseconds since the epoch.
+	 *
+	 * @return birth time or {@code null}
+	 */
 	public Long getBirthTime()
 	{
 		return birthTime;
 	}
 
+	/**
+	 * Sets the birth time in milliseconds since the epoch.
+	 *
+	 * @param birthTime birth time to store
+	 */
 	public void setBirthTime(Long birthTime)
 	{
 		this.birthTime = birthTime;
 	}
 
+	/**
+	 * Returns the arbitrary key/value properties associated with the context.
+	 *
+	 * @return context properties or {@code null}
+	 */
 	public Map<String, String> getProperties()
 	{
 		return properties;
 	}
 
+	/**
+	 * Sets the arbitrary key/value properties associated with the context.
+	 *
+	 * @param properties context properties to store
+	 */
 	public void setProperties(Map<String, String> properties)
 	{
 		this.properties = properties;

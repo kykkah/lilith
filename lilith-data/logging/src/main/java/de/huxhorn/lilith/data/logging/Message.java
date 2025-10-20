@@ -59,17 +59,33 @@ public final class Message
 		// for XML serialization
 	}
 
+	/**
+	 * Creates a message with a pattern and no arguments.
+	 *
+	 * @param messagePattern the message pattern
+	 */
 	public Message(String messagePattern)
 	{
 		this(messagePattern, null);
 	}
 
+	/**
+	 * Creates a message with the given pattern and arguments.
+	 *
+	 * @param messagePattern the message pattern
+	 * @param arguments      the message arguments
+	 */
 	public Message(String messagePattern, String[] arguments)
 	{
 		this.messagePattern = messagePattern;
 		this.arguments = arguments;
 	}
 
+	/**
+	 * Returns the formatted message, computing it lazily as needed.
+	 *
+	 * @return the formatted message
+	 */
 	public String getMessage()
 	{
 		if(this.formattedMessage == null)
@@ -80,22 +96,42 @@ public final class Message
 		return this.formattedMessage;
 	}
 
+	/**
+	 * Returns the message pattern.
+	 *
+	 * @return the message pattern
+	 */
 	public String getMessagePattern()
 	{
 		return messagePattern;
 	}
 
+	/**
+	 * Sets the message pattern and clears the cached formatted message.
+	 *
+	 * @param messagePattern the message pattern
+	 */
 	public void setMessagePattern(String messagePattern)
 	{
 		this.messagePattern = messagePattern;
 		this.formattedMessage = null;
 	}
 
+	/**
+	 * Returns the arguments used in the message pattern.
+	 *
+	 * @return the message arguments
+	 */
 	public String[] getArguments()
 	{
 		return arguments;
 	}
 
+	/**
+	 * Sets the message arguments and clears the cached formatted message.
+	 *
+	 * @param arguments the message arguments
+	 */
 	public void setArguments(String[] arguments)
 	{
 		this.arguments = arguments;

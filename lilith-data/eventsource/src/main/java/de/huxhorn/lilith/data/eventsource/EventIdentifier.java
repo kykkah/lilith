@@ -36,11 +36,15 @@ package de.huxhorn.lilith.data.eventsource;
 
 import java.io.Serializable;
 
+/**
+ * Unique identifier of an event within a given source.
+ */
 public class EventIdentifier
 	implements Serializable, Cloneable
 {
 	private static final long serialVersionUID = -4019164988350212853L;
 
+	/** Sentinel used when no local id is available. */
 	public static final long NO_LOCAL_ID = -1;
 
 	private SourceIdentifier sourceIdentifier;
@@ -57,21 +61,41 @@ public class EventIdentifier
 		this.localId = localId;
 	}
 
+	/**
+	 * Returns the identifier of the source that created the event.
+	 *
+	 * @return source identifier or {@code null}
+	 */
 	public SourceIdentifier getSourceIdentifier()
 	{
 		return sourceIdentifier;
 	}
 
+	/**
+	 * Sets the source identifier that created the event.
+	 *
+	 * @param sourceIdentifier source identifier to store
+	 */
 	public void setSourceIdentifier(SourceIdentifier sourceIdentifier)
 	{
 		this.sourceIdentifier = sourceIdentifier;
 	}
 
+	/**
+	 * Returns the local sequential id within the source.
+	 *
+	 * @return local id or {@link #NO_LOCAL_ID} if unset
+	 */
 	public long getLocalId()
 	{
 		return localId;
 	}
 
+	/**
+	 * Sets the local sequential id within the source.
+	 *
+	 * @param localId local id to store
+	 */
 	public void setLocalId(long localId)
 	{
 		this.localId = localId;

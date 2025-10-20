@@ -25,20 +25,32 @@ public interface FileConstants
 	/** Magic header written at the start of Lilith container files. */
 	int MAGIC_VALUE = 0x0B5E55ED;
 
+	/** File extension for primary Lilith archive files. */
 	String FILE_EXTENSION = ".lilith";
+	/** File extension used for index sidecar files. */
 	String INDEX_FILE_EXTENSION = ".idx";
+	/** File extension appended while files are actively written. */
 	String ACTIVE_FILE_EXTENSION = ".active";
 
+	/** Metadata key storing the primary identifier. */
 	String IDENTIFIER_KEY = "primaryIdentifier";
+	/** Metadata key storing the secondary identifier. */
 	String SECONDARY_IDENTIFIER_KEY = "secondaryIdentifier";
 
+	/** Metadata key describing the content type. */
 	String CONTENT_TYPE_KEY = "contentType";
+	/** Metadata value indicating logging content. */
 	String CONTENT_TYPE_VALUE_LOGGING = "logging";
+	/** Metadata value indicating access log content. */
 	String CONTENT_TYPE_VALUE_ACCESS = "access";
 
+	/** Metadata key describing the content format. */
 	String CONTENT_FORMAT_KEY = "contentFormat";
+	/** Metadata value indicating protobuf encoding. */
 	String CONTENT_FORMAT_VALUE_PROTOBUF = "protobuf";
 
+	/** Metadata key describing the compression mode. */
 	String COMPRESSION_KEY = "compression";
+	/** Metadata value indicating gzip compression. */
 	String COMPRESSION_VALUE_GZIP = "GZIP";
 }

@@ -36,6 +36,9 @@ package de.huxhorn.lilith.data.eventsource;
 
 import java.io.Serializable;
 
+/**
+ * Identifies a source that produces events.
+ */
 public class SourceIdentifier
 	implements Serializable, Comparable<SourceIdentifier>, Cloneable
 {
@@ -60,21 +63,41 @@ public class SourceIdentifier
 		this.secondaryIdentifier = secondaryIdentifier;
 	}
 
+	/**
+	 * Returns the primary identifier.
+	 *
+	 * @return primary identifier or {@code null}
+	 */
 	public String getIdentifier()
 	{
 		return identifier;
 	}
 
+	/**
+	 * Sets the primary identifier.
+	 *
+	 * @param identifier primary identifier to store
+	 */
 	public void setIdentifier(String identifier)
 	{
 		this.identifier = identifier;
 	}
 
+	/**
+	 * Returns the secondary identifier used to disambiguate sources.
+	 *
+	 * @return secondary identifier or {@code null}
+	 */
 	public String getSecondaryIdentifier()
 	{
 		return secondaryIdentifier;
 	}
 
+	/**
+	 * Sets the secondary identifier used to disambiguate sources.
+	 *
+	 * @param secondaryIdentifier secondary identifier to store
+	 */
 	public void setSecondaryIdentifier(String secondaryIdentifier)
 	{
 		this.secondaryIdentifier = secondaryIdentifier;
