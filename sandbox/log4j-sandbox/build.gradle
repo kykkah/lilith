@@ -9,5 +9,5 @@ application {
 }
 
 dependencies {
-	implementation libraries.'log4j'
+	implementation libraries.'log4j-1x'
 }
