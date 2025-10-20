@@ -8,6 +8,11 @@ plugins {
 group = "de.huxhorn.lilith.buildlogic"
 version = "1.0-SNAPSHOT"
 
+tasks.wrapper {
+    gradleVersion = "8.13"
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 kotlin {
     jvmToolchain(17)
 }
