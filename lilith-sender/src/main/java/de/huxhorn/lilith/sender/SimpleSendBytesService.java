@@ -55,8 +55,14 @@ public class SimpleSendBytesService
 	 */
 	public static final int DEFAULT_RECONNECTION_DELAY = 30_000;
 
+	/**
+	 * The default number of events buffered while the connection is offline.
+	 */
 	public static final int DEFAULT_QUEUE_SIZE = 1000;
 
+	/**
+	 * The default wait time in milliseconds between polling attempts.
+	 */
 	public static final int DEFAULT_POLL_INTERVAL = 100;
 
 	private final Object lock = new Object();
@@ -221,7 +227,7 @@ public class SimpleSendBytesService
 			setDaemon(true);
 		}
 
-			/** Closes the current connection and updates the state. */
+		/** Closes the current connection and updates the state. */
 		void closeConnection()
 		{
 			synchronized(lock)

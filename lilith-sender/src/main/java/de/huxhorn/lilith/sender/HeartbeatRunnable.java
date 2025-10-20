@@ -34,6 +34,9 @@
 
 package de.huxhorn.lilith.sender;
 
+/**
+ * Periodically sends heartbeat packets to keep a sender connection alive.
+ */
 public class HeartbeatRunnable
 	implements Runnable
 {
@@ -47,11 +50,22 @@ public class HeartbeatRunnable
 	private final int heartbeatRate;
 	private final SendBytesService sender;
 
+	/**
+	 * Creates a heartbeat runnable using {@link #HEARTBEAT_RATE}.
+	 *
+	 * @param sender service that transmits the heartbeat payload
+	 */
 	public HeartbeatRunnable(SendBytesService sender)
 	{
 		this(sender, HEARTBEAT_RATE);
 	}
 
+	/**
+	 * Creates a heartbeat runnable that emits heartbeats with the given period.
+	 *
+	 * @param sender        service that transmits the heartbeat payload
+	 * @param heartbeatRate pause between heartbeats in milliseconds
+	 */
 	public HeartbeatRunnable(SendBytesService sender, int heartbeatRate)
 	{
 		this.sender = sender;

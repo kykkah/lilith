@@ -43,10 +43,15 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
+/**
+ * Creates {@link DataOutputStream} instances backed by TCP sockets.
+ */
 public class SocketDataOutputStreamFactory
 	implements DataOutputStreamFactory
 {
+	/** Default timeout in milliseconds when establishing a connection. */
 	public static final int DEFAULT_CONNECTION_TIMEOUT = 10_000;
+	/** Default timeout in milliseconds for write operations. */
 	public static final int DEFAULT_WRITE_TIMEOUT = 5000;
 
 	private final String hostName;
@@ -54,11 +59,25 @@ public class SocketDataOutputStreamFactory
 	private int connectionTimeout;
 	private int writeTimeout;
 
+	/**
+	 * Creates a factory that connects to the given host and port using default timeouts.
+	 *
+	 * @param hostName target hostname
+	 * @param port     target port
+	 */
 	public SocketDataOutputStreamFactory(String hostName, int port)
 	{
 		this(hostName, port, DEFAULT_CONNECTION_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
 	}
 
+	/**
+	 * Creates a factory that connects to the given host with custom timeout settings.
+	 *
+	 * @param hostName           target hostname
+	 * @param port               target port
+	 * @param connectionTimeout  maximum time to wait for establishing the socket, in milliseconds
+	 * @param writeTimeout       maximum time to wait for socket writes, in milliseconds
+	 */
 	public SocketDataOutputStreamFactory(String hostName, int port, int connectionTimeout, int writeTimeout)
 	{
 		this.hostName = hostName;

@@ -37,8 +37,17 @@ package de.huxhorn.lilith.sender;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * Factory for creating freshly connected {@link DataOutputStream} instances.
+ */
 public interface DataOutputStreamFactory
 {
+	/**
+	 * Opens a new stream that can be used to send data to the remote endpoint.
+	 *
+	 * @return a writable data output stream
+	 * @throws IOException if the connection cannot be created
+	 */
 	DataOutputStream createDataOutputStream()
 		throws IOException;
 }

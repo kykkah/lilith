@@ -41,6 +41,9 @@ import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Distributes serialized events across multiple {@link SimpleSendBytesService} instances.
+ */
 public class MultiplexSendBytesService
 	implements SendBytesService
 {
@@ -57,6 +60,16 @@ public class MultiplexSendBytesService
 	private Thread dispatcherThread;
 	private boolean debug;
 
+	/**
+	 * Creates a multiplexed sender that forwards events to multiple remote hosts.
+	 *
+	 * @param name               thread name prefix used by the dispatcher
+	 * @param remoteHostsList    target hosts that receive events
+	 * @param port               port number to connect to on each host
+	 * @param writeByteStrategy  strategy used to serialize message boundaries
+	 * @param reconnectionDelay  delay between reconnection attempts in milliseconds
+	 * @param queueSize          maximum number of events buffered while offline
+	 */
 	public MultiplexSendBytesService(String name, List<String> remoteHostsList, int port, WriteByteStrategy writeByteStrategy, long reconnectionDelay, int queueSize)
 	{
 		this.name = name;
@@ -70,11 +83,21 @@ public class MultiplexSendBytesService
 		this.eventBytes = new ArrayBlockingQueue<>(queueSize, true);
 	}
 
+	/**
+	 * Returns whether verbose diagnostics are enabled.
+	 *
+	 * @return {@code true} if debug output is active
+	 */
 	public boolean isDebug()
 	{
 		return debug;
 	}
 
+	/**
+	 * Enables or disables verbose diagnostics on underlying senders.
+	 *
+	 * @param debug {@code true} to turn on debug output
+	 */
 	public void setDebug(boolean debug)
 	{
 		this.debug = debug;

@@ -37,6 +37,9 @@ package de.huxhorn.lilith.sender;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * {@link WriteByteStrategy} that separates messages using a trailing zero byte.
+ */
 public class ZeroDelimitedWriteByteStrategy
 	implements WriteByteStrategy
 {

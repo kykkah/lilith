@@ -37,6 +37,9 @@ package de.huxhorn.lilith.sender;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * Strategy that decides how serialized events are written to an output stream.
+ */
 public interface WriteByteStrategy
 {
 	/**

@@ -78,11 +78,19 @@ public abstract class MultiplexSocketAppenderBase<E>
 	/** Cached UUID associated with this appender instance. */
 	private String uuid;
 
+	/**
+	 * Creates a new appender using the default byte strategy and queue size.
+	 */
 	public MultiplexSocketAppenderBase()
 	{
 		this(new MessageWriteByteStrategy());
 	}
 
+	/**
+	 * Creates a new appender using the supplied byte strategy and default queue size.
+	 *
+	 * @param writeByteStrategy strategy for writing encoded events to their targets
+	 */
 	public MultiplexSocketAppenderBase(WriteByteStrategy writeByteStrategy)
 	{
 		this(writeByteStrategy, DEFAULT_QUEUE_SIZE);
@@ -433,7 +441,9 @@ public abstract class MultiplexSocketAppenderBase<E>
 	}
 
 	/**
-	 * Executes preProcess.
+	 * Gives subclasses a chance to decorate or filter the event before serialization.
+	 *
+	 * @param e event about to be encoded
 	 */
 	protected abstract void preProcess(E e);
 

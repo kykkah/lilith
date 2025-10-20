@@ -37,6 +37,9 @@ package de.huxhorn.lilith.sender;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * {@link WriteByteStrategy} that prefixes each payload with its length.
+ */
 public class MessageWriteByteStrategy
 	implements WriteByteStrategy
 {

@@ -34,6 +34,9 @@
 
 package de.huxhorn.lilith.sender;
 
+/**
+ * Abstraction for components that can transmit serialized event payloads.
+ */
 public interface SendBytesService
 {
 	/**
@@ -45,7 +48,13 @@ public interface SendBytesService
 	 */
 	void sendBytes(byte[] bytes);
 
+	/**
+	 * Initializes resources so that calls to {@link #sendBytes(byte[])} can succeed.
+	 */
 	void startUp();
 
+	/**
+	 * Releases resources and stops any background processing.
+	 */
 	void shutDown();
 }

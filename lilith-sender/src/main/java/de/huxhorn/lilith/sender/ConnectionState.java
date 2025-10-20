@@ -34,10 +34,17 @@
 
 package de.huxhorn.lilith.sender;
 
+/**
+ * Represents the lifecycle stages of a sender connection.
+ */
 public enum ConnectionState
 {
+	/** No active connection is available. */
 	OFFLINE,
+	/** A connection attempt is currently in progress. */
 	CONNECTING,
+	/** The connection is established. */
 	CONNECTED,
+	/** The connection and any retries have been cancelled permanently. */
 	CANCELED
 }
