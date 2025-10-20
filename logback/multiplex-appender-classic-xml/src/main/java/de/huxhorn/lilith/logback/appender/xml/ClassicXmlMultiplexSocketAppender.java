@@ -39,6 +39,9 @@ import de.huxhorn.lilith.data.logging.logback.TransformingEncoder;
 import de.huxhorn.lilith.data.logging.xml.codec.LoggingXmlEncoder;
 import de.huxhorn.lilith.logback.appender.core.MultiplexSocketAppenderBase;
 
+/**
+ * Logback appender that multiplexes classic logging events encoded as Lilith XML.
+ */
 public class ClassicXmlMultiplexSocketAppender
 	extends MultiplexSocketAppenderBase<LoggingEvent>
 {
@@ -56,12 +59,20 @@ public class ClassicXmlMultiplexSocketAppender
 	private boolean usingDefaultPort;
 	private TransformingEncoder transformingEncoder;
 
+	/**
+	 * Creates a compressed XML appender that targets the default Lilith port.
+	 */
 	@SuppressWarnings("unused")
 	public ClassicXmlMultiplexSocketAppender()
 	{
 		this(true);
 	}
 
+	/**
+	 * Creates an XML appender that can optionally compress payloads.
+	 *
+	 * @param compressing {@code true} to gzip the event stream
+	 */
 	@SuppressWarnings("WeakerAccess")
 	public ClassicXmlMultiplexSocketAppender(boolean compressing)
 	{
@@ -116,6 +127,11 @@ public class ClassicXmlMultiplexSocketAppender
 		transformingEncoder.setLilithEncoder(new LoggingXmlEncoder(compressing));
 	}
 
+	/**
+	 * Configures whether caller data should be captured before dispatching events.
+	 *
+	 * @param includeCallerData {@code true} to resolve caller information eagerly
+	 */
 	public void setIncludeCallerData(boolean includeCallerData)
 	{
 		this.includeCallerData = includeCallerData;

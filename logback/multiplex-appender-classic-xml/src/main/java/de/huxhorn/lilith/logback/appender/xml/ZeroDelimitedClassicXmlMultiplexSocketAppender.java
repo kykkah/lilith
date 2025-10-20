@@ -57,6 +57,9 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 	private boolean includeCallerData;
 	private final TransformingEncoder transformingEncoder;
 
+	/**
+	 * Creates a zero-delimited XML appender targeting the default debugging port.
+	 */
 	public ZeroDelimitedClassicXmlMultiplexSocketAppender()
 	{
 		super(new ZeroDelimitedWriteByteStrategy());
@@ -79,6 +82,11 @@ public class ZeroDelimitedClassicXmlMultiplexSocketAppender
 		transformingEncoder.setUUID(getUUID());
 	}
 
+	/**
+	 * Controls whether caller information should be gathered before sending the event.
+	 *
+	 * @param includeCallerData {@code true} to eagerly resolve caller data
+	 */
 	public void setIncludeCallerData(boolean includeCallerData)
 	{
 		this.includeCallerData = includeCallerData;
