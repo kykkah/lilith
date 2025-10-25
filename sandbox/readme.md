@@ -1,0 +1,1 @@
+Remember to add these sandbox projects to your IDE workspace by hand because the root lilith/settings.gradle is not configured to include the submodules under the folder "sandbox". 
