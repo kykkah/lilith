@@ -15,7 +15,8 @@ rootProject.name = 'lilith'
 
 includeBuild('build-logic')
 
-// Explicit top-level modules
+// Explicit top-level modules, There names are their folder names
+// Usage gradlew :lilith-conditions:clean 
 def topLevelModules = [
         'lilith',
         'lilith-conditions',
@@ -28,9 +29,11 @@ def topLevelModules = [
         'lilith-sounds',
         'lilith-xml-logging'
 ]
+// Explicitly include top-level modules
 topLevelModules.each { m -> if (file(m).isDirectory()) include(":${m}") }
 
-// Grouped module directories to scan
+// Scan and include submodules which are grouped under common parent directories
+// Usage gradlew :log4j:log4j-core:clean
 ['lilith-data', 'jul', 'log4j', 'logback'].each { parent ->
     def parentDir = file(parent)
     if (parentDir.isDirectory()) {

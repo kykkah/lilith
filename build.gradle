@@ -17,8 +17,9 @@ buildscript {
     }
 }
 
-apply from: 'dependencyDefinitions.gradle'
-apply from: 'projectDependencies.gradle'
+// Apply the dependencies from the parent project's projectDependencies.gradle
+apply from: "${rootProject.projectDir}/projectDependencies.gradle"
+// apply from: 'projectDependencies.gradle'
 
 wrapper {
 	gradleVersion = '8.13'
