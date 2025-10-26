@@ -1,0 +1,7 @@
+## Benchmark Module
+
+- benchmark/src/main/java/de/huxhorn/lilith/benchmark/Benchmark.java defines a standalone CLI app with a main method that synthesizes EventWrapper<LoggingEvent> samples and repeatedly measures different serialization/codec strategies (protobuf, Lilith XML, JavaBeans XML, Java serialization, file-buffer add/get) used elsewhere in Lilith (lilith-data, lilith-engine, sulky).
+- CLI switches let you toggle GC pauses, XML-related runs, call-stack, and exception payloads (-gc, -xml, -nc, -ne) before executing the warm-up and “real” benchmark loops (benchmark/src/main/java/de/huxhorn/lilith/benchmark/Benchmark.java:1010).
+- Logging is routed through logback.xml to emit pipe-delimited timing summaries that match the human-readable formatter (benchmark/src/main/resources/logback.xml:4).
+- The directory still carries Maven-era packaging scaffolding (benchmark/src/main/assembly/bin.xml:11) and resource placeholders (benchmark/src/main/resources/app.properties:1) but there is no build.gradle or inclusion in settings.gradle, so the Gradle build ignores this module unless you wire it in manually.
+- Practically, you run it ad hoc from an IDE or a custom classpath that includes the Lilith jars; it is not part of the production distribution or automated build pipeline.
